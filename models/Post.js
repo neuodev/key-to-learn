@@ -38,6 +38,16 @@ const PostSchema = new mongoose.Schema(
       { type: String, required: [true, "Can't add empty category"] },
     ],
     tags: [{ type: String, required: [true, "Can't add empty tag"] }],
+    published: {
+      type: Boolean,
+      required: true,
+      default: false,
+    },
+    thumbnail: {
+      type: String,
+      required: true,
+      default: "https://via.placeholder.com/150",
+    },
   },
   {
     timestamps: true,
