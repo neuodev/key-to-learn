@@ -5,19 +5,19 @@ module.exports = [
         {
           id: "Vo19TRST9t",
           type: "header",
-          data: '{"text":"Hello world text","level":2}',
+          data: { text: "Hello world text", level: 2 },
           _id: "6128f02ca23e05ec63a276b0",
         },
         {
           id: "fC1Tb1gkdX",
           type: "list",
-          data: '{"style":"ordered","items":["first&nbsp;","Second"]}',
+          data: { style: "ordered", items: ["first&nbsp;", "Second"] },
           _id: "6128f02ca23e05ec63a276b1",
         },
         {
           id: "BFs2Deqp27",
           type: "paragraph",
-          data: '{"text":"Normal text"}',
+          data: { text: "Normal text" },
           _id: "6128f02ca23e05ec63a276b2",
         },
       ],

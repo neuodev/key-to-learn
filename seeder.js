@@ -1,11 +1,11 @@
 const mongoose = require("mongoose");
 const dotenv = require("dotenv");
 const colors = require("colors");
-const users = require("./data/users.js");
-const posts = require("./data/posts.js");
-const User = require("./models/User.js");
-const Post = require("./models/Post.js");
-const connectDB = require("./config/db.js");
+const users = require("./data/users");
+const posts = require("./data/posts");
+const User = require("./models/User");
+const Post = require("./models/Post");
+const connectDB = require("./config/db");
 
 dotenv.config();
 
@@ -17,11 +17,15 @@ const importData = async () => {
     await User.deleteMany();
 
     const createdUsers = await User.insertMany(users);
-
-    const adminUser = createdUsers[0]._id;
-
     const sampleposts = posts.map((post) => {
-      return { ...post };
+      post.body.blocks = post.body.blocks.map((b) => ({
+        ...b,
+        data: JSON.stringify(b.data),
+      }));
+      return {
+        ...post,
+        user: createdUsers[0],
+      };
     });
 
     await Post.insertMany(sampleposts);
