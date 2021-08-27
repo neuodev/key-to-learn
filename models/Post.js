@@ -19,6 +19,10 @@ const PostSchema = new mongoose.Schema(
       required: [true, "Post header is required"],
       minlength: [10, "Header should not be less than 10 chars"],
     },
+    user: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "User",
+    },
     body: {
       blocks: [block],
       time: {
