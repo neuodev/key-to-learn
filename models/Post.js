@@ -33,6 +33,7 @@ const PostSchema = new mongoose.Schema(
     categories: [
       { type: String, required: [true, "Can't add empty category"] },
     ],
+    tags: [{ type: String, required: [true, "Can't add empty tag"] }],
   },
   {
     timestamps: true,

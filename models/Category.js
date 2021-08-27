@@ -6,12 +6,6 @@ const CategorySchema = new mongoose.Schema({
     required: true,
     unique: true,
   },
-  posts: [
-    {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "Post",
-    },
-  ],
 });
 
 const Category = mongoose.model("Category", CategorySchema);

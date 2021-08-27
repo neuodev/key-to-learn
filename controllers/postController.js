@@ -15,6 +15,7 @@ module.exports.createPost = asyncHandler(async (req, res, next) => {
     ...b,
     data: JSON.stringify(b.data),
   }));
+
   await Post.create(req.body);
   res.status(200).json({ success: "Post Created Successfully" });
 });
