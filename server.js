@@ -2,10 +2,11 @@ const express = require("express");
 const colors = require("colors");
 const dotenv = require("dotenv");
 const connectDB = require("./config/db");
-const postsRouter = require("./routes/postsRouts");
+const postsRouter = require("./routes/postsRoutes");
 const morgan = require("morgan");
 const { notFound, errorHandler } = require("./middleware/errorMiddleware");
 const userRouter = require("./routes/userRoutes");
+const categoryRouter = require("./routes/categoryRoutes");
 
 // Load env variables
 dotenv.config();
@@ -23,6 +24,7 @@ app.use(express.json());
 // Routes
 app.use("/api/v1/posts", postsRouter);
 app.use("/api/v1/users", userRouter);
+app.use("/api/v1/categories", categoryRouter);
 // Middlewares
 app.use(notFound);
 app.use(errorHandler);

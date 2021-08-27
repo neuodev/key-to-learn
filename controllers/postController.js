@@ -35,6 +35,13 @@ module.exports.updatePost = asyncHandler(async (req, res, next) => {
     res.status(400);
     throw new Error("At least one field is requried to perform the update");
   }
+
+  if (body) {
+    body.blocks = body.blocks.map((b) => ({
+      ...b,
+      data: JSON.stringify(b.data),
+    }));
+  }
   post.header = header || post.header;
   post.body = body || post.body;
 
