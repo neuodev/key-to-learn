@@ -5,6 +5,7 @@ const connectDB = require("./config/db");
 const postsRouter = require("./routes/postsRouts");
 const morgan = require("morgan");
 const { notFound, errorHandler } = require("./middleware/errorMiddleware");
+const userRouter = require("./routes/userRoutes");
 
 // Load env variables
 dotenv.config();
@@ -20,8 +21,8 @@ if (process.env.NODE_ENV === "development") {
 app.use(express.json());
 
 // Routes
-app.use("/api/v1/post", postsRouter);
-
+app.use("/api/v1/posts", postsRouter);
+app.use("/api/v1/users", userRouter);
 // Middlewares
 app.use(notFound);
 app.use(errorHandler);
