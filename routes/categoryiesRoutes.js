@@ -4,7 +4,7 @@ const {
   createCategegory,
   updateCategory,
   deleteCategory,
-} = require("../controllers/CategoryController");
+} = require("../controllers/categoryController");
 
 const { protect, admin } = require("../middleware/authMiddleware");
 

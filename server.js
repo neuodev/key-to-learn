@@ -5,8 +5,9 @@ const connectDB = require("./config/db");
 const postsRouter = require("./routes/postsRoutes");
 const morgan = require("morgan");
 const { notFound, errorHandler } = require("./middleware/errorMiddleware");
-const userRouter = require("./routes/userRoutes");
-const categoryRouter = require("./routes/categoryRoutes");
+const usersRouter = require("./routes/usersRoutes");
+const categoriesRouter = require("./routes/categoryiesRoutes");
+const commentsRouter = require("./routes/commentsRoutes");
 
 // Load env variables
 dotenv.config();
@@ -23,8 +24,10 @@ app.use(express.json());
 
 // Routes
 app.use("/api/v1/posts", postsRouter);
-app.use("/api/v1/users", userRouter);
-app.use("/api/v1/categories", categoryRouter);
+app.use("/api/v1/users", usersRouter);
+app.use("/api/v1/categories", categoriesRouter);
+app.use("/api/v1/comments", commentsRouter);
+
 // Middlewares
 app.use(notFound);
 app.use(errorHandler);

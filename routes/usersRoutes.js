@@ -8,7 +8,7 @@ const {
   getUserById,
   updateUser,
   deleteUser,
-} = require("../controllers/UserController");
+} = require("../controllers/userController");
 const { admin, protect } = require("../middleware/authMiddleware");
 
 const userRouter = express.Router();
