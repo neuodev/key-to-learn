@@ -1,5 +1,6 @@
 const Post = require("../models/Post");
 const asyncHandler = require("express-async-handler");
+const User = require("../models/User");
 
 // @desc    Create new Post
 // @route   POST /api/v1/post
@@ -112,8 +113,47 @@ module.exports.deletePost = asyncHandler(async (req, res, next) => {
     throw new Error("Post Not Found");
   }
 
-  // @todo => Check if the user is admin
   await Post.findByIdAndDelete(req.params.id);
 
   res.status(200).json({ success: "Post deleted successfully" });
+});
+
+// @desc    Update Post by the user (Like , Dislike, add to favourite)
+// @route   PUT /api/v1/post/user/:id
+// @access  Private
+module.exports.updatePostByUser = asyncHandler(async (req, res, next) => {
+  const post = await Post.findOne({ id: req.params.id });
+  if (!post) {
+    res.status(404);
+    throw new Error("Post Not Found");
+  }
+
+  const { like, dislike, addToFavourite } = req.body;
+  if (!like && !dislike && !addToFavourite) {
+    res.status(400);
+    throw new Error("At least on field is requied to perform the update");
+  }
+
+  if (like) {
+    for (const user of post.likes) {
+      if (user._id.toString() === req.user._id.toString()) {
+        res.status(404);
+        throw new Error("Can't like the post twice");
+      }
+    }
+    post.likes.push(req.user);
+  }
+
+  if (dislike) {
+    post.likes = post.likes.filter(
+      (u) => u._id.toString() !== req.user._id.toString()
+    );
+  }
+  if (addToFavourite) {
+    const user = req.user;
+    user.favouriteList.push(post);
+    await user.save();
+  }
+  await post.save();
+  res.status(200).json({ success: "Operation done successfully" });
 });

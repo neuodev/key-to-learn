@@ -49,6 +49,13 @@ const PostSchema = new mongoose.Schema(
       required: true,
       default: "https://via.placeholder.com/150",
     },
+    likes: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "User",
+        required: true,
+      },
+    ],
   },
   {
     timestamps: true,
