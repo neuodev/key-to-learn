@@ -27,7 +27,7 @@ const userSchema = mongoose.Schema(
       required: true,
       default: false,
     },
-    favouriteList: [
+    favoriteList: [
       {
         type: mongoose.Schema.Types.ObjectId,
         ref: "Post",

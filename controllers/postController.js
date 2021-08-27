@@ -117,7 +117,7 @@ module.exports.deletePost = asyncHandler(async (req, res, next) => {
   res.status(200).json({ success: "Post deleted successfully" });
 });
 
-// @desc    Update Post by the user (Like , Dislike, add to favourite)
+// @desc    Update Post by the user (Like , Dislike, add to favorite)
 // @route   PUT /api/v1/post/user/:id
 // @access  Private
 module.exports.updatePostByUser = asyncHandler(async (req, res, next) => {
@@ -127,8 +127,8 @@ module.exports.updatePostByUser = asyncHandler(async (req, res, next) => {
     throw new Error("Post Not Found");
   }
 
-  const { like, dislike, addToFavourite } = req.body;
-  if (!like && !dislike && !addToFavourite) {
+  const { like, dislike, addToFavorite } = req.body;
+  if (!like && !dislike && !addToFavorite) {
     res.status(400);
     throw new Error("At least on field is requied to perform the update");
   }
@@ -148,9 +148,9 @@ module.exports.updatePostByUser = asyncHandler(async (req, res, next) => {
       (u) => u._id.toString() !== req.user._id.toString()
     );
   }
-  if (addToFavourite) {
+  if (addToFavorite) {
     const user = req.user;
-    user.favouriteList.push(post);
+    user.FavoriteList.push(post);
     await user.save();
   }
   await post.save();

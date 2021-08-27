@@ -56,6 +56,11 @@ const PostSchema = new mongoose.Schema(
         required: true,
       },
     ],
+    level: {
+      type: String,
+      enum: ["BASICS", "INTERMEDIATE", "ADVANCED"],
+      default: "BASICS",
+    },
   },
   {
     timestamps: true,
