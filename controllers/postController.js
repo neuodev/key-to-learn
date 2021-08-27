@@ -10,7 +10,7 @@ module.exports.createPost = asyncHandler(async (req, res, next) => {
 });
 
 // @desc    Update Post
-// @route   POST /api/v1/post/:id
+// @route   PUT /api/v1/post/:id
 // @access  Private
 module.exports.updatePost = asyncHandler(async (req, res, next) => {
   const { id } = req.params;

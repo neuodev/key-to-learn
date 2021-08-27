@@ -10,6 +10,6 @@ const {
 const postsRouter = epxress.Router();
 
 postsRouter.route("/").post(createPost).get(getPosts);
-postsRouter.route("/:id").post(updatePost).get(getPost).delete(deletePost);
+postsRouter.route("/:id").put(updatePost).get(getPost).delete(deletePost);
 
 module.exports = postsRouter;
