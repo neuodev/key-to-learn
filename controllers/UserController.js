@@ -27,7 +27,7 @@ module.exports.authUser = asyncHandler(async (req, res) => {
 // @route   POST /api/v1/users
 // @access  Private
 module.exports.registerUser = asyncHandler(async (req, res, next) => {
-  const { email, name, password, isAdmin } = req.body;
+  const { email, name, password } = req.body;
 
   const userExists = await User.findOne({ email });
 
@@ -40,7 +40,6 @@ module.exports.registerUser = asyncHandler(async (req, res, next) => {
     name,
     email,
     password,
-    isAdmin,
   });
 
   if (user) {
