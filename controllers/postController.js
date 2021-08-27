@@ -5,7 +5,7 @@ const asyncHandler = require("express-async-handler");
 // @route   POST /api/v1/post
 // @access  Private
 module.exports.createPost = asyncHandler(async (req, res, next) => {
-  const { body } = req.body;
+  const { body, tags, pubished, thumbnail, header, categories } = req.body;
   if (!body || !body.blocks) {
     res.status(400);
     throw new Error("Post can't be empty");
@@ -16,7 +16,15 @@ module.exports.createPost = asyncHandler(async (req, res, next) => {
     data: JSON.stringify(b.data),
   }));
 
-  await Post.create(req.body);
+  await Post.create({
+    body,
+    tags,
+    pubished,
+    thumbnail,
+    header,
+    categories,
+    user: req.user,
+  });
   res.status(200).json({ success: "Post Created Successfully" });
 });
 
