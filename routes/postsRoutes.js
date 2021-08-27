@@ -7,11 +7,16 @@ const {
   deletePost,
   updatePostByUser,
 } = require("../controllers/postController");
+const advancedResults = require("../middleware/advancedResults");
 const { protect, admin } = require("../middleware/authMiddleware");
+const Post = require("../models/Post");
 
 const postsRouter = epxress.Router();
 
-postsRouter.route("/").post(protect, admin, createPost).get(getPosts);
+postsRouter
+  .route("/")
+  .post(protect, admin, createPost)
+  .get(advancedResults(Post), getPosts);
 
 postsRouter
   .route("/:id")

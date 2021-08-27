@@ -86,8 +86,7 @@ module.exports.updatePost = asyncHandler(async (req, res, next) => {
 // @route   GET /api/v1/post
 // @access  Private
 module.exports.getPosts = asyncHandler(async (req, res, next) => {
-  const posts = await Post.find();
-  res.status(200).json({ posts });
+  res.status(200).json(res.advancedResults);
 });
 
 // @desc    Get Single Post
