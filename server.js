@@ -8,6 +8,7 @@ const { notFound, errorHandler } = require("./middleware/errorMiddleware");
 const usersRouter = require("./routes/usersRoutes");
 const categoriesRouter = require("./routes/categoryiesRoutes");
 const commentsRouter = require("./routes/commentsRoutes");
+const messagesRouter = require("./routes/messagesRoutes");
 
 // Load env variables
 dotenv.config();
@@ -27,6 +28,7 @@ app.use("/api/v1/posts", postsRouter);
 app.use("/api/v1/users", usersRouter);
 app.use("/api/v1/categories", categoriesRouter);
 app.use("/api/v1/comments", commentsRouter);
+app.use("/api/v1/messages", messagesRouter);
 
 // Middlewares
 app.use(notFound);

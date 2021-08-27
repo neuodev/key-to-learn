@@ -20,6 +20,12 @@ const MessageSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
+    type: {
+      type: String,
+      required: true,
+      enum: ["GENERAL", "BUG", "REQUEST CONTENT", "OTHERS"],
+      default: "GENERAL",
+    },
   },
   {
     timestamps: true,
