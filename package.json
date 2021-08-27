@@ -4,7 +4,9 @@
   "description": "Blog webiste about web development, ML and DS",
   "main": "server.js",
   "scripts": {
-    "start": "nodemon server.js"
+    "start": "nodemon server.js",
+    "import": "node seeder.js",
+    "distroy": "node seeder.js -d"
   },
   "author": "Ahmed Ibrahim",
   "license": "MIT",

@@ -1,5 +1,17 @@
 const mongoose = require("mongoose");
 
+const block = new mongoose.Schema({
+  id: {
+    type: String,
+    required: true,
+  },
+  type: {
+    type: String,
+    required: true,
+  },
+  data: String,
+});
+
 const PostSchema = new mongoose.Schema(
   {
     header: {
@@ -8,8 +20,15 @@ const PostSchema = new mongoose.Schema(
       minlength: [10, "Header should not be less than 10 chars"],
     },
     body: {
-      type: String,
-      required: [true, "Post body is required"],
+      blocks: [block],
+      time: {
+        type: Number,
+        required: true,
+      },
+      version: {
+        type: String,
+        required: true,
+      },
     },
     categories: [
       { type: String, required: [true, "Can't add empty category"] },

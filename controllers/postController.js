@@ -5,12 +5,22 @@ const asyncHandler = require("express-async-handler");
 // @route   POST /api/v1/post
 // @access  Private
 module.exports.createPost = asyncHandler(async (req, res, next) => {
-  const post = await Post.create(req.body);
+  const { body } = req.body;
+  if (!body || !body.blocks) {
+    res.status(400);
+    throw new Error("Post can't be empty");
+  }
+
+  body.blocks = body.blocks.map((b) => ({
+    ...b,
+    data: JSON.stringify(b.data),
+  }));
+  await Post.create(req.body);
   res.status(200).json({ success: "Post Created Successfully" });
 });
 
 // @desc    Update Post
-// @route   PUT /api/v1/post/:id
+// @route   PUT /api/v1/posts/:id
 // @access  Private
 module.exports.updatePost = asyncHandler(async (req, res, next) => {
   const { id } = req.params;
