@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import axios from "axios";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faClock, faComments, faTags } from "@fortawesome/free-solid-svg-icons";
@@ -10,6 +10,7 @@ const Post = ({ post }) => {
 
   return (
     <div className="p-5 mt-4">
+      <h1 className="text-3xl font-medium my-6">{post.header}</h1>
       <div>
         <img
           className="w-full h-full object-cover"
@@ -17,7 +18,6 @@ const Post = ({ post }) => {
           alt={post.header}
         />
       </div>
-      <h1 className="text-3xl font-medium my-6">{post.header}</h1>
 
       <div className="grid items-center  grid-cols-12 gap-3 ">
         <div className="col-span-6 hover:underline hover:text-blue-500 font-medium text-gray-700">
