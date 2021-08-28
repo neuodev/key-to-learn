@@ -5,9 +5,9 @@ class Layout extends Component {
   render() {
     const { children } = this.props;
     return (
-      <div className="overflow-hidden border relative h-screen">
+      <div className="overflow-hidden relative w-full min-h-screen">
         <Navbar />
-        {children}
+        <div className="max-w-screen-lg mx-auto">{children}</div>
       </div>
     );
   }

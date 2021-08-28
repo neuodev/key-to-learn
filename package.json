@@ -6,7 +6,8 @@
   "scripts": {
     "start": "nodemon server.js",
     "import": "node seeder.js",
-    "distroy": "node seeder.js -d"
+    "distroy": "node seeder.js -d",
+    "start:client": "npm run dev --prefix client"
   },
   "author": "Ahmed Ibrahim",
   "license": "MIT",
