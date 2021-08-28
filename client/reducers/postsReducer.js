@@ -23,7 +23,7 @@ export const featuredPostsReducer = (
       return {
         ...state,
         loading: false,
-        eror: paload,
+        eror: payload,
       };
     case FEATURED_POSTS_SUCCESS:
       return {

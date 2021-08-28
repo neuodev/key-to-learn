@@ -1,6 +1,11 @@
-import Head from "next/head";
-import Image from "next/image";
+import { useEffect } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { getFeaturedPosts } from "../actions/postsActions";
 
 export default function Home() {
-  return <div>{/* <h1 className="text-right text-blue-600">Lorem</h1> */}</div>;
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(getFeaturedPosts());
+  }, []);
+  return <div></div>;
 }

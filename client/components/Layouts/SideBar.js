@@ -66,7 +66,10 @@ const SideBar = ({ showSideBar, hideSidebar }) => {
         <div className="my-4">
           <ul>
             {MENU_ITEMS.map((tab) => (
-              <li className="mb-1 font-medium text-lg text-center ">
+              <li
+                key={tab.title}
+                className="mb-1 font-medium text-lg text-center "
+              >
                 <Link href={tab.path}>
                   <p
                     className={` py-3 w-full inline-block cursor-pointer rounded-md ${
