@@ -1,3 +1,3 @@
 import { combineReducers } from "redux";
-
-export default combineReducers({});
+import { featuredPostsReducer } from "./postsReducer";
+export default combineReducers({ featuredPostsReducer });
