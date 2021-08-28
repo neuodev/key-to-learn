@@ -9,8 +9,7 @@ const Post = ({ post }) => {
   const publishedDate = dayjs(post.createdAt).format("MMM DD,YYYY");
 
   return (
-    <div className="p-5 mt-4">
-      <h1 className="text-3xl font-medium my-6">{post.header}</h1>
+    <div className="p-5">
       <div>
         <img
           className="w-full h-full object-cover"
@@ -19,6 +18,7 @@ const Post = ({ post }) => {
         />
       </div>
 
+      <h1 className="text-3xl font-medium my-6">{post.header}</h1>
       <div className="grid items-center  grid-cols-12 gap-3 ">
         <div className="col-span-6 hover:underline hover:text-blue-500 font-medium text-gray-700">
           <span>by</span> <a href="#author">Ahmed Ibrahim</a>
