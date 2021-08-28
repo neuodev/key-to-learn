@@ -4,6 +4,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faClock, faComments, faTags } from "@fortawesome/free-solid-svg-icons";
 import dayjs from "dayjs";
 import Tags from "../../components/common/Tags";
+import PostBody from "../../components/PostBody";
 const Post = ({ post }) => {
   console.log(post);
   const publishedDate = dayjs(post.createdAt).format("MMM DD,YYYY");
@@ -29,7 +30,7 @@ const Post = ({ post }) => {
         </div>
         <a
           href="#comments"
-          className="flex items-center justify-start col-span-6"
+          className="flex items-center justify-start col-span-6 hover:underline hover:text-blue-500 font-medium "
         >
           <FontAwesomeIcon icon={faComments} className="mr-2 text-gray-300 " />
           <p className="font-medium text-gray-600">{3} Comments</p>
@@ -39,7 +40,7 @@ const Post = ({ post }) => {
         </div>
       </div>
 
-      {/* <div id="author">author</div> */}
+      <PostBody body={post.body} />
     </div>
   );
 };
