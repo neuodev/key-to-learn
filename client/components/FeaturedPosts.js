@@ -18,7 +18,7 @@ const FeaturedPosts = () => {
       ) : error ? (
         <h1>error</h1>
       ) : (
-        <div>
+        <div className="p-4">
           {posts.map((post) => (
             <FeaturedPostsCard post={post} key={post._id} />
           ))}
