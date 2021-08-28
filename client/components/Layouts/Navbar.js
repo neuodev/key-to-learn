@@ -1,7 +1,9 @@
 import React, { useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faBars } from "@fortawesome/free-solid-svg-icons";
+import { faBars, faCode } from "@fortawesome/free-solid-svg-icons";
 import SideBar from "./SideBar";
+import Link from "next/link";
+
 const Navbar = () => {
   const [showSideBar, setShowSideBar] = useState(true);
   const hideSidebar = () => {
@@ -10,10 +12,16 @@ const Navbar = () => {
   return (
     <div className="flex items-center justify-between px-4 py-3 shadow-xl ">
       <div>
-        <img
-          src="	https://www.dataquest.io/wp-content/uploads/2021/05/dq-logo-2.png"
-          alt="Key To Learn"
-        />
+        <Link href="/">
+          <div className="flex items-center justify-start">
+            <div className="inline-block mr-2 bg-gray-900 text-white py-1 px-1.5 rounded-full">
+              <FontAwesomeIcon icon={faCode} />
+            </div>
+            <p className="font-medium text-gray-800 uppercase tracking-wider text-lg">
+              Key To Learn
+            </p>
+          </div>
+        </Link>
       </div>
       <button
         onClick={() => setShowSideBar(!showSideBar)}
