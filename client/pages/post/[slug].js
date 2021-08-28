@@ -1,13 +1,45 @@
 import React, { useEffect } from "react";
-import { useRouter } from "next/router";
 import axios from "axios";
-
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faClock, faComments, faTags } from "@fortawesome/free-solid-svg-icons";
+import dayjs from "dayjs";
+import Tags from "../../components/common/Tags";
 const Post = ({ post }) => {
   console.log(post);
+  const publishedDate = dayjs(post.createdAt).format("MMM DD,YYYY");
 
   return (
-    <div>
-      <pre>{JSON.stringify(post, null, 2)}</pre>
+    <div className="p-5 mt-4">
+      <div>
+        <img
+          className="w-full h-full object-cover"
+          src={post.thumbnail}
+          alt={post.header}
+        />
+      </div>
+      <h1 className="text-3xl font-medium my-6">{post.header}</h1>
+
+      <div className="grid items-center  grid-cols-12 gap-3 ">
+        <div className="col-span-6 hover:underline hover:text-blue-500 font-medium text-gray-700">
+          <span>by</span> <a href="#author">Ahmed Ibrahim</a>
+        </div>
+        <div className="flex items-center justify-start col-span-6">
+          <FontAwesomeIcon icon={faClock} className="text-gray-300 mr-2" />
+          <p className="font-medium text-gray-600">{publishedDate}</p>
+        </div>
+        <a
+          href="#comments"
+          className="flex items-center justify-start col-span-6"
+        >
+          <FontAwesomeIcon icon={faComments} className="mr-2 text-gray-300 " />
+          <p className="font-medium text-gray-600">{3} Comments</p>
+        </a>
+        <div className=" col-span-6">
+          <Tags tags={post.domain} />
+        </div>
+      </div>
+
+      {/* <div id="author">author</div> */}
     </div>
   );
 };
@@ -34,9 +66,12 @@ export async function getStaticPaths() {
 
 // This also gets called at build time
 export async function getStaticProps({ params }) {
+  console.log(params);
   try {
     const { data } = await axios.get(`/api/v1/posts`, {
-      slug: params.slug,
+      params: {
+        slug: params.slug,
+      },
       proxy: {
         host: "localhost",
         port: 9000,
