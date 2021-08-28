@@ -16,16 +16,13 @@ const MENU_ITEMS = [
   },
   {
     title: "All Posts",
-    path: "/admin/posts",
+    path: "/admin/",
   },
 ];
 
 const SideBar = ({}) => {
   return (
-    <div
-      id="admin-page-sidebar"
-      className={` w-96 shadow-xl bg-white h-screen`}
-    >
+    <div id="admin-page-sidebar" className={`w-64 shadow-xl bg-white h-screen`}>
       <div className="w-full h-full p-4">
         <div className="my-4">
           <ul>
