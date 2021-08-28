@@ -5,7 +5,7 @@ import SideBar from "./SideBar";
 import Link from "next/link";
 
 const Navbar = () => {
-  const [showSideBar, setShowSideBar] = useState(true);
+  const [showSideBar, setShowSideBar] = useState(false);
   const hideSidebar = () => {
     setShowSideBar(false);
   };
