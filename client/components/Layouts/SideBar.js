@@ -3,7 +3,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTimes } from "@fortawesome/free-solid-svg-icons";
 import Link from "next/link";
 
-const startFree = "Start Free";
+const join = "Join";
 
 const MENU_ITEMS = [
   {
@@ -19,8 +19,13 @@ const MENU_ITEMS = [
     path: "/data-science",
   },
   {
-    title: startFree,
-    path: "/start-free",
+    title: "Search",
+    path: "/search",
+  },
+  ,
+  {
+    title: join,
+    path: "/join",
   },
   ,
   {
@@ -65,7 +70,7 @@ const SideBar = ({ showSideBar, hideSidebar }) => {
                 <Link href={tab.path}>
                   <p
                     className={` py-3 w-full inline-block cursor-pointer rounded-md ${
-                      tab.title === startFree
+                      tab.title === join
                         ? "bg-blue-300 text-blue-900 hover:bg-blue-200"
                         : "hover:bg-gray-100"
                     }`}
