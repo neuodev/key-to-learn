@@ -1,4 +1,33 @@
 import React, { useEffect, useRef } from "react";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faTimes } from "@fortawesome/free-solid-svg-icons";
+import Link from "next/link";
+
+const startFree = "Start Free";
+
+const MENU_ITEMS = [
+  {
+    title: "Web Development",
+    path: "/web-development",
+  },
+  {
+    title: "Machine learning",
+    path: "/machine-learning",
+  },
+  {
+    title: "Data Science",
+    path: "/data-science",
+  },
+  {
+    title: startFree,
+    path: "/start-free",
+  },
+  ,
+  {
+    title: "Sign In",
+    path: "/sign-in",
+  },
+];
 
 const SideBar = ({ showSideBar, hideSidebar }) => {
   const ref = useRef(null);
@@ -17,11 +46,38 @@ const SideBar = ({ showSideBar, hideSidebar }) => {
     <div
       ref={ref}
       id="main-page-sidebar"
-      className={`absolute top-0 right-0 w-72 shadow-xl bg-gray-50 h-screen transition-transform transform duration-200 ${
+      className={`absolute top-0 right-0 w-96 shadow-xl bg-gray-50 h-screen transition-transform transform duration-300 ${
         showSideBar ? "translate-x-0" : "translate-x-full"
       }`}
     >
-      This should be the side bar
+      <div className="w-full h-full p-4">
+        <button
+          onClick={hideSidebar}
+          className="inline-block bg-black text-white px-2 rounded-sm shadow-xl"
+        >
+          <FontAwesomeIcon icon={faTimes} />
+        </button>
+
+        <div className="my-4">
+          <ul>
+            {MENU_ITEMS.map((tab) => (
+              <li className="mb-1 font-medium text-lg text-center ">
+                <Link href={tab.path}>
+                  <p
+                    className={` py-3 w-full inline-block cursor-pointer rounded-md ${
+                      tab.title === startFree
+                        ? "bg-blue-300 text-blue-900 hover:bg-blue-200"
+                        : "hover:bg-gray-100"
+                    }`}
+                  >
+                    {tab.title}
+                  </p>
+                </Link>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </div>
     </div>
   );
 };
