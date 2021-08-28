@@ -25,6 +25,7 @@ const importData = async () => {
       return {
         ...post,
         user: createdUsers[0],
+        slug: post.header.toLowerCase().trim().replace(/ /g, "-"),
       };
     });
 

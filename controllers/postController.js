@@ -16,7 +16,7 @@ module.exports.createPost = asyncHandler(async (req, res, next) => {
     ...b,
     data: JSON.stringify(b.data),
   }));
-
+  const slug = header.toLowerCase().trim().replace(/ /g, "-");
   await Post.create({
     body,
     tags,
@@ -25,6 +25,7 @@ module.exports.createPost = asyncHandler(async (req, res, next) => {
     header,
     categories,
     user: req.user,
+    slug,
   });
   res.status(200).json({ success: "Post Created Successfully" });
 });
@@ -90,16 +91,17 @@ module.exports.getPosts = asyncHandler(async (req, res, next) => {
 });
 
 // @desc    Get Single Post
-// @route   GET /api/v1/post/:id
+// @route   GET /api/v1/post/:slug
 // @access  Private
 module.exports.getPost = asyncHandler(async (req, res, next) => {
-  const post = await Post.findById(req.params.id);
-  if (!post) {
+  const { slug } = req.params;
+  const post = await Post.find({ slug });
+  if (post.length === 0) {
     res.status(404);
     throw new Error("Post Not Found");
     return;
   }
-  res.status(200).json({ post });
+  res.status(200).json({ post: post[0] });
 });
 
 // @desc    Delete Post by Id

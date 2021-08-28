@@ -21,8 +21,9 @@ postsRouter
 postsRouter
   .route("/:id")
   .put(protect, admin, updatePost)
-  .get(getPost)
   .delete(protect, admin, deletePost);
+
+postsRouter.route("/:slug").get(getPost);
 
 postsRouter.route("/user/:id").put(protect, updatePostByUser);
 module.exports = postsRouter;

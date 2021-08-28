@@ -4,7 +4,6 @@ import dayjs from "dayjs";
 import Tags from "./Tags";
 
 const FeaturedPostsCard = ({ post, idx }) => {
-  const slug = post.header.toLowerCase().replace(/ /g, "-");
   const publishedDate = dayjs(post.createdAt).format("MMM DD,YYYY");
 
   return (
@@ -19,7 +18,7 @@ const FeaturedPostsCard = ({ post, idx }) => {
         {idx === 0 && (
           <h1 className="text-6xl mb-9 hidden lg:block">Key To Learn</h1>
         )}
-        <Link href={`/post/${slug}`}>
+        <Link href={`/post/${post.slug}`}>
           <div className="mb-4 cursor-pointer h-full w-full">
             <img
               src={post.thumbnail}
@@ -28,7 +27,7 @@ const FeaturedPostsCard = ({ post, idx }) => {
             />
           </div>
         </Link>
-        <Link href={`/post/${slug}`}>
+        <Link href={`/post/${post.slug}`}>
           <h1 className=" text-3xl mb-2 inline-block cursor-pointer hover:underline hover:text-blue-400">
             {post.header}
           </h1>

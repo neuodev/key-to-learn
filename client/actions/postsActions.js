@@ -13,7 +13,7 @@ export const getFeaturedPosts = () => async (dispatch) => {
   try {
     const { data } = await axios.get("/api/v1/posts", {
       params: {
-        select: "createdAt,thumbnail,domain,header",
+        select: "createdAt,thumbnail,domain,header,slug",
         limit: 3,
         sort: "-createdAt",
       },

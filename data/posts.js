@@ -73,7 +73,7 @@ module.exports = [
     published: true,
     thumbnail:
       "https://robocrop.realpython.net/?url=https%3A//files.realpython.com/media/Collections.deque_Watermarked.745551967e6b.jpg&w=960&sig=938d96fa49981ff5c515e3e32b3707754e512378",
-    header: "Learn HTML CSS Now",
+    header: "Learn HTML CSS ",
   },
   {
     domain: {
