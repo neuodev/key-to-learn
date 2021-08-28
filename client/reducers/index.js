@@ -1,3 +1,7 @@
 import { combineReducers } from "redux";
 import { featuredPostsReducer } from "./postsReducer";
-export default combineReducers({ featuredPosts: featuredPostsReducer });
+import { layoutReducer } from "./usersReducer";
+export default combineReducers({
+  featuredPosts: featuredPostsReducer,
+  layout: layoutReducer,
+});

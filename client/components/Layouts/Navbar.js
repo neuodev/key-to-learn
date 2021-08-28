@@ -3,15 +3,21 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBars, faCode } from "@fortawesome/free-solid-svg-icons";
 import SideBar from "./SideBar";
 import Link from "next/link";
+import { useSelector } from "react-redux";
 
 const Navbar = () => {
+  const layout = useSelector((state) => state.layout);
   const [showSideBar, setShowSideBar] = useState(false);
   const hideSidebar = () => {
     setShowSideBar(false);
   };
   return (
     <div className=" px-4 py-3 shadow-xl ">
-      <div className="flex items-center justify-between max-w-screen-lg mx-auto">
+      <div
+        className={`flex items-center justify-between ${
+          !layout.isAdmin && "max-w-screen-lg"
+        } mx-auto`}
+      >
         <div>
           <Link href="/">
             <div className="flex items-center justify-start">

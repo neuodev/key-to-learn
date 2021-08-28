@@ -22,7 +22,10 @@ const MENU_ITEMS = [
     title: "Search",
     path: "/search",
   },
-  ,
+  {
+    title: "Admin",
+    path: "/admin",
+  },
   {
     title: join,
     path: "/join",
@@ -67,6 +70,7 @@ const SideBar = ({ showSideBar, hideSidebar }) => {
           <ul>
             {MENU_ITEMS.map((tab) => (
               <li
+                onClick={hideSidebar}
                 key={tab.title}
                 className="mb-1 font-medium text-lg text-center "
               >
