@@ -1,11 +1,9 @@
-import { useEffect } from "react";
-import { useSelector, useDispatch } from "react-redux";
-import { getFeaturedPosts } from "../actions/postsActions";
+import FeaturedPosts from "../components/FeaturedPosts";
 
 export default function Home() {
-  const dispatch = useDispatch();
-  useEffect(() => {
-    dispatch(getFeaturedPosts());
-  }, []);
-  return <div></div>;
+  return (
+    <div>
+      <FeaturedPosts />
+    </div>
+  );
 }

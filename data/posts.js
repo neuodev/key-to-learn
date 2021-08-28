@@ -1,5 +1,11 @@
 module.exports = [
   {
+    domain: {
+      category: ["ML"],
+      subcategory: ["Transform data"],
+      tags: [],
+      level: "BASICS",
+    },
     body: {
       blocks: [
         {
@@ -27,11 +33,18 @@ module.exports = [
     tags: [],
     likes: [],
     published: true,
-    thumbnail: "https://via.placeholder.com/150",
+    thumbnail:
+      "https://files.realpython.com/media/Pythons-Math-Module-Guide_Watermarked.c882e267cbd0.jpg",
     header: "New header for this data",
     categories: ["cool"],
   },
   {
+    domain: {
+      category: ["ML"],
+      subcategory: ["Transform data"],
+      tags: [],
+      level: "BASICS",
+    },
     body: {
       time: 1630081505479,
       blocks: [
@@ -58,11 +71,17 @@ module.exports = [
     tags: ["html", "css"],
     likes: [],
     published: true,
-    thumbnail: "https://via.placeholder.com/150",
+    thumbnail:
+      "https://robocrop.realpython.net/?url=https%3A//files.realpython.com/media/Collections.deque_Watermarked.745551967e6b.jpg&w=960&sig=938d96fa49981ff5c515e3e32b3707754e512378",
     header: "Learn HTML CSS Now",
-    categories: ["Web development"],
   },
   {
+    domain: {
+      category: ["ML"],
+      subcategory: ["Transform data"],
+      tags: [],
+      level: "BASICS",
+    },
     body: {
       time: 1630081616906,
       blocks: [
@@ -86,11 +105,46 @@ module.exports = [
       ],
       version: "2.22.2",
     },
-    tags: ["Docker"],
     likes: [],
     published: true,
-    thumbnail: "https://via.placeholder.com/150",
+    thumbnail:
+      "https://robocrop.realpython.net/?url=https%3A//files.realpython.com/media/Reading-and-Writing-Data-With-Pandas_Watermarked.435ef1c38466.jpg&w=480&sig=d20a2aeb6c0d2a0fb6790d5ddfe714a42fb86478",
     header: "Learn HTML CSS Now",
-    categories: ["DevOps"],
+  },
+  {
+    domain: {
+      category: ["DS"],
+      subcategory: ["Formate the data"],
+      tags: [],
+      level: "ADVANCED",
+    },
+    body: {
+      time: 1630081616906,
+      blocks: [
+        {
+          id: "4VxxzZc3KG",
+          type: "header",
+          data: { text: "Docker", level: 2 },
+        },
+        {
+          id: "fOfio8PDNX",
+          type: "paragraph",
+          data: {
+            text: "Learning Docker one of the most in demand skill you can have on you Resume&nbsp;",
+          },
+        },
+        {
+          id: "kfcwtV_1d7",
+          type: "list",
+          data: { style: "ordered", items: ["Docker"] },
+        },
+      ],
+      version: "2.22.2",
+    },
+    likes: [],
+    published: true,
+    thumbnail:
+      "https://robocrop.realpython.net/?url=https%3A//files.realpython.com/media/Monthly-Python-News_Blue_Watermarked.7af21e149ead.jpg&w=960&sig=d98fb9f773a91b2971cc72a3ffaed061a85bd5a0",
+    header: "Transform data",
   },
 ];

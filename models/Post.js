@@ -35,10 +35,6 @@ const PostSchema = new mongoose.Schema(
         required: true,
       },
     },
-    categories: [
-      { type: String, required: [true, "Can't add empty category"] },
-    ],
-    tags: [{ type: String, required: [true, "Can't add empty tag"] }],
     published: {
       type: Boolean,
       required: true,
@@ -56,10 +52,23 @@ const PostSchema = new mongoose.Schema(
         required: true,
       },
     ],
-    level: {
-      type: String,
-      enum: ["BASICS", "INTERMEDIATE", "ADVANCED"],
-      default: "BASICS",
+    domain: {
+      level: {
+        type: String,
+        enum: ["BASICS", "INTERMEDIATE", "ADVANCED"],
+        default: "BASICS",
+      },
+      categories: [
+        {
+          type: String,
+          required: [true, "Can't add empty category"],
+          enum: ["WEB", "ML", "DS", "DEVOPS"],
+        },
+      ],
+      subcategory: [
+        { type: String, required: [true, "Can't add empty category"] },
+      ],
+      tags: [{ type: String, required: [true, "Can't add empty tag"] }],
     },
   },
   {

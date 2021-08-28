@@ -11,7 +11,13 @@ export const getFeaturedPosts = () => async (dispatch) => {
   });
 
   try {
-    const { data } = await axios.get("/api/v1/posts");
+    const { data } = await axios.get("/api/v1/posts", {
+      params: {
+        select: "createdAt,thumbnail,domain,header",
+        limit: 3,
+        sort: "-createdAt",
+      },
+    });
     dispatch({
       type: FEATURED_POSTS_SUCCESS,
       payload: data.data,
