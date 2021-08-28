@@ -9,8 +9,7 @@ const Layout = ({ children }) => {
   const dispatch = useDispatch();
   const layout = useSelector((state) => state.layout);
   useEffect(() => {
-    // Update to check the if the login user is admin or not
-    console.log(/admin/g.test(router.asPath));
+    //@todo Update to check the if the login user is admin or not
     if (/admin/g.test(router.asPath)) {
       dispatch({
         type: TOGGLE_ADMIN_MODE,
@@ -26,7 +25,11 @@ const Layout = ({ children }) => {
   return (
     <div className="overflow-hidden relative w-full min-h-screen">
       <Navbar />
-      <div className={`${!layout.isAdmin && "max-w-screen-lg"} mx-auto`}>
+      <div
+        className={`${
+          !layout.isAdmin && "max-w-screen-lg"
+        } mx-auto h-full w-full`}
+      >
         {children}
       </div>
     </div>
