@@ -50,10 +50,9 @@ export const createPost = (postData) => async (dispatch, state) => {
   };
   try {
     const { data } = await axios.post("/api/v1/posts", postData, config);
-    console.log(data);
     dispatch({
       type: POST_CREATE_SUCCESS,
-      payload: data.data,
+      payload: data.success,
     });
   } catch (error) {
     dispatch({

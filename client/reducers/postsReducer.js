@@ -61,7 +61,7 @@ export const createPostReducer = (
       return {
         ...state,
         loading: false,
-        eror: payload,
+        error: payload,
       };
     case POST_CREATE_SUCCESS:
       return {

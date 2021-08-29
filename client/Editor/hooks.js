@@ -38,7 +38,7 @@ export const useClearDataCallback = (editor) => {
 };
 
 // load saved data
-export const useLoadData = () => () => {
+export const useLoadData = () => {
   const [data, setData] = useState(null);
   const [loading, setLoading] = useState(false);
 

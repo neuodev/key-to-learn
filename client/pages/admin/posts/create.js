@@ -12,6 +12,9 @@ import Switch from "@material-ui/core/Switch";
 import OptionsMenu from "../../../components/Posts/OptionsMenu";
 import { useSelector, useDispatch } from "react-redux";
 import { createPost } from "../../../actions/postsActions";
+import Alert from "../../../components/common/Alert";
+import { TYPES } from "../../../utils";
+import Spinner from "../../../components/common/Spinner";
 
 const Editor = dynamic(
   () => import("../../../Editor/editor").then((mod) => mod.EditorContainer),
@@ -78,7 +81,7 @@ const Create = () => {
   };
 
   const dispatch = useDispatch();
-
+  const createPostState = useSelector((state) => state.createPost);
   const publishPost = async () => {
     const out = await editor.save();
     dispatch(
@@ -111,11 +114,34 @@ const Create = () => {
     },
   ];
 
+  useEffect(() => {
+    if (createPostState.error) {
+      setAlert({
+        type: TYPES.ERROR,
+        message: createPostState.error,
+      });
+    }
+    if (createPostState.success) {
+      setAlert({
+        type: TYPES.SUCCESS,
+        message: createPostState.success,
+      });
+    }
+  }, [createPostState]);
   return (
     <div className="flex max-h-screen ">
       <SideBar />
-
       <div className="w-full h-screen border-none max-h-screen overflow-y-scroll bg-gray-50 p-4">
+        {createPostState.loading && (
+          <div className="my-3 flex items-center justify-center">
+            <Spinner />
+          </div>
+        )}
+        {alert.message && (
+          <div className="my-3">
+            <Alert type={alert.type} message={alert.message} />
+          </div>
+        )}
         <div className="flex items-center justify-end mb-4">
           {OPTIONS_LIST.map((option) => (
             <button
