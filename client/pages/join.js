@@ -9,6 +9,7 @@ import Alert from "../components/common/Alert";
 import { TYPES } from "../utils";
 import { USER_JOIN_RESET } from "../actions/constants";
 import Spinner from "../components/common/Spinner";
+import { useRouter } from "next/dist/client/router";
 
 const Join = () => {
   const [userInfo, setUserInfo] = useState({
@@ -51,15 +52,15 @@ const Join = () => {
 
     dispatch(registerUser(userInfo));
   };
-
+  const router = useRouter();
   useEffect(() => {
     if (success) {
       setTimeout(() => {
-        // dispatch({
-        //   type: USER_JOIN_RESET,
-        // });
-        alert("redirect");
-      }, 5000);
+        dispatch({
+          type: USER_JOIN_RESET,
+        });
+        router.push("/");
+      }, 1500);
     }
   }, [success, joiningError]);
   return (
