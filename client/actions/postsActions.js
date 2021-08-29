@@ -2,7 +2,7 @@ import {
   FEATURED_POSTS_ERROR,
   FEATURED_POSTS_REQUEST,
   FEATURED_POSTS_SUCCESS,
-  POST_CREATE_REQUEIST,
+  POST_CREATE_REQUEST,
   POST_CREATE_SUCCESS,
   POST_CREATE_ERROR,
 } from "./constants";
@@ -50,6 +50,7 @@ export const createPost = (postData) => async (dispatch, state) => {
   };
   try {
     const { data } = await axios.post("/api/v1/posts", postData, config);
+    console.log(data);
     dispatch({
       type: POST_CREATE_SUCCESS,
       payload: data.data,
@@ -58,8 +59,8 @@ export const createPost = (postData) => async (dispatch, state) => {
     dispatch({
       type: POST_CREATE_ERROR,
       payload:
-        error.response && error.response.data.error
-          ? error.response.data.error
+        error.response && error.response.data.message
+          ? error.response.data.message
           : error.message,
     });
   }

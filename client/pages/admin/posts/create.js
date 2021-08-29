@@ -10,6 +10,8 @@ import {
 import { options } from "../../../Editor";
 import Switch from "@material-ui/core/Switch";
 import OptionsMenu from "../../../components/Posts/OptionsMenu";
+import { useSelector, useDispatch } from "react-redux";
+import { createPost } from "../../../actions/postsActions";
 
 const Editor = dynamic(
   () => import("../../../Editor/editor").then((mod) => mod.EditorContainer),
@@ -24,12 +26,12 @@ const SUB_CATEGORY = ["SUB1", "SUB2", "SUB3"];
 const savedPost = "draft-post";
 const Create = () => {
   const [editor, setEditor] = useState(null);
-  const [published, setPublised] = useState(false);
+  const [publish, setPublised] = useState(false);
   const [header, setHeader] = useState();
   const [level, setLevel] = useState(LEVELS[0]);
   const [category, setCategory] = useState(CATEGORIES[0]);
   const [subcategory, setSubcategory] = useState(SUB_CATEGORY[0]);
-  const [tags, setTags] = useState();
+  const [tags, setTags] = useState("");
   const [editorData, setEditorData] = useState({});
   const [alert, setAlert] = useState({
     type: null,
@@ -48,7 +50,7 @@ const Create = () => {
       category,
       tags,
       subcategory,
-      published,
+      publish,
       level,
       data: out,
     });
@@ -69,9 +71,27 @@ const Create = () => {
     setCategory(data.category);
     setTags(data.tags);
     setSubcategory(data.subcategory);
-    setPublised(data.published);
+    setPublised(data.publish);
     setLevel(data.level);
     setEditorData(data.data);
+    console.log(data);
+  };
+
+  const dispatch = useDispatch();
+
+  const publishPost = async () => {
+    const out = await editor.save();
+    dispatch(
+      createPost({
+        header,
+        tags: tags.split(","),
+        publish,
+        level,
+        category,
+        subcategory,
+        body: out,
+      })
+    );
   };
   const OPTIONS_LIST = [
     {
@@ -87,7 +107,7 @@ const Create = () => {
     },
     {
       text: "Publish",
-      onClick: () => {},
+      onClick: publishPost,
     },
   ];
 
@@ -129,14 +149,14 @@ const Create = () => {
           <div className="col-span-3">
             <label
               className={`p-1 px-2 font-medium inline-block rounded-md ${
-                published
+                publish
                   ? "bg-blue-400  text-blue-500"
                   : "bg-red-300 text-red-700"
               }`}
             >
               Publish
             </label>
-            <Switch color="primary" onChange={() => setPublised(!published)} />
+            <Switch color="primary" onChange={() => setPublised(!publish)} />
           </div>
           <div className="col-span-3">
             <OptionsMenu

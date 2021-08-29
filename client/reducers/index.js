@@ -1,5 +1,5 @@
 import { combineReducers } from "redux";
-import { featuredPostsReducer } from "./postsReducer";
+import { createPostReducer, featuredPostsReducer } from "./postsReducer";
 import { layoutReducer } from "./layoutReducer";
 import { registerUserReducer, userReduser } from "./usersReducer";
 export default combineReducers({
@@ -7,4 +7,5 @@ export default combineReducers({
   layout: layoutReducer,
   join: registerUserReducer,
   user: userReduser,
+  createPost: createPostReducer,
 });
