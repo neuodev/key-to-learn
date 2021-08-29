@@ -7,6 +7,7 @@ import {
   USER_SIGNIN_SUCCESS,
 } from "./constants";
 import axios from "axios";
+import { USER_INFO } from "../utils";
 
 export const registerUser = (userInfo) => async (dispatch) => {
   dispatch({
@@ -18,10 +19,11 @@ export const registerUser = (userInfo) => async (dispatch) => {
     },
   };
   try {
-    await axios.post("/api/v1/users", userInfo, conifg);
+    const { data } = await axios.post("/api/v1/users", userInfo, conifg);
     dispatch({
       type: USER_JOIN_SUCCESS,
     });
+    console.log(data);
 
     //@todo Will dispatch login as will here
   } catch (error) {
@@ -52,7 +54,7 @@ export const signIn = (userInfo) => async (dispatch) => {
       payload: data,
     });
 
-    //@todo Will dispatch login as will here
+    localStorage.setItem(USER_INFO, JSON.stringify(data));
   } catch (error) {
     dispatch({
       type: USER_SIGNIN_ERROR,

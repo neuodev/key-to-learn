@@ -54,7 +54,7 @@ const SideBar = ({ showSideBar, hideSidebar }) => {
     <div
       ref={ref}
       id="main-page-sidebar"
-      className={`absolute top-0 right-0 w-96 shadow-xl bg-gray-50 h-screen transition-transform transform duration-300 ${
+      className={`absolute z-50 top-0 right-0 w-96 shadow-xl bg-gray-50 h-screen transition-transform transform duration-300 ${
         showSideBar ? "translate-x-0" : "translate-x-full"
       }`}
     >
