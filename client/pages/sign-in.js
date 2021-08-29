@@ -62,9 +62,7 @@ const SignIn = () => {
         type: USER_JOIN_ERROR,
         payload: null,
       });
-      setTimeout(() => {
-        // router.push("/");
-      }, 1500);
+      router.push("/");
     }
   }, [user, siginingError]);
   return (
