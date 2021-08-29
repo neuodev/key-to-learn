@@ -1,7 +1,7 @@
 import Link from "next/link";
 import React from "react";
-import { Flex } from "rebass";
 import PostItem from "./PostItem";
+
 const TITLES = [
   {
     text: "Header",

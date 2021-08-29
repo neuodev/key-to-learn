@@ -3,6 +3,7 @@ import dayjs from "dayjs";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCheck, faTimes } from "@fortawesome/free-solid-svg-icons";
 import Tags from "../../common/Tags";
+import Link from "next/link";
 
 const PostItem = ({ post, idx }) => {
   const publishedDate = dayjs(post.createdAt).format("MMM DD,YYYY");
@@ -11,7 +12,9 @@ const PostItem = ({ post, idx }) => {
   return (
     <div className="grid grid-cols-12 w-full py-3 px-4">
       <div className="col-span-2 font-medium text-gray-700 cursor-pointer">
-        <p className="truncate">{post.header}</p>
+        <Link href={`/admin/posts/update?${post.slug}`}>
+          <p className="truncate">{post.header}</p>
+        </Link>
       </div>
       <div className="col-span-3">
         <Tags tags={post.domain} />
