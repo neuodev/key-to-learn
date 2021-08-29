@@ -15,6 +15,7 @@ import { createPost } from "../../../actions/postsActions";
 import Alert from "../../../components/common/Alert";
 import { TYPES } from "../../../utils";
 import Spinner from "../../../components/common/Spinner";
+import axios from "axios";
 
 const Editor = dynamic(
   () => import("../../../Editor/editor").then((mod) => mod.EditorContainer),
@@ -37,6 +38,7 @@ const Create = () => {
   const [tags, setTags] = useState("");
   const [editorData, setEditorData] = useState({});
   const [shouldLoadData, setShouldData] = useState(false);
+  const [loading, setLoading] = useState(false);
   const [alert, setAlert] = useState({
     type: null,
     message: null,
@@ -94,7 +96,7 @@ const Create = () => {
   const dispatch = useDispatch();
   const createPostState = useSelector((state) => state.createPost);
 
-  const publishPost = async () => {
+  const updatePost = async () => {
     const out = await editor.save();
     dispatch(
       createPost({
@@ -110,9 +112,6 @@ const Create = () => {
   };
   const OPTIONS_LIST = [
     {
-      text: "Save To DB",
-    },
-    {
       text: "Save To LS",
       onClick: saveToLS,
     },
@@ -121,10 +120,28 @@ const Create = () => {
       onClick: loadFromLS,
     },
     {
-      text: "Publish",
-      onClick: publishPost,
+      text: "Update",
+      onClick: updatePost,
     },
   ];
+
+  useEffect(() => {
+    const fetchPost = async () => {
+      try {
+        const { data } = await axios.put("/api/v1/posts");
+        console.log(data);
+      } catch (error) {
+        setAlert({
+          type: TYPES.ERROR,
+          message:
+            error.response && error.response.data.message
+              ? error.response.data.message
+              : error.message,
+        });
+      }
+    };
+    fetchPost();
+  }, []);
 
   useEffect(() => {
     if (createPostState.error) {
@@ -164,6 +181,7 @@ const Create = () => {
         <div className="flex items-center justify-end mb-4">
           {OPTIONS_LIST.map((option) => (
             <button
+              key={option.text}
               onClick={option.onClick}
               className="bg-blue-100 mr-2 py-2 px-3 rounded-md shadow-md text-blue-600  hover:bg-blue-200"
             >
