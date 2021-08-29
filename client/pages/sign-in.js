@@ -2,16 +2,20 @@ import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCode } from "@fortawesome/free-solid-svg-icons";
-import { isValidUserInfo } from "../utils/user";
+import { isValidSignIn, isValidUserInfo } from "../utils/user";
 import { useSelector, useDispatch } from "react-redux";
-import { registerUser } from "../actions/userActions";
+import { registerUser, signIn } from "../actions/userActions";
 import Alert from "../components/common/Alert";
 import { TYPES } from "../utils";
-import { USER_JOIN_RESET } from "../actions/constants";
+import {
+  USER_JOIN_ERROR,
+  USER_JOIN_RESET,
+  USER_SIGNIN_RESET,
+} from "../actions/constants";
 import Spinner from "../components/common/Spinner";
 import { useRouter } from "next/dist/client/router";
 
-const Join = () => {
+const SignIn = () => {
   const [userInfo, setUserInfo] = useState({
     password: "",
     email: "",
@@ -30,15 +34,15 @@ const Join = () => {
   const dispatch = useDispatch();
   let {
     loading,
-    error: joiningError,
-    success,
-  } = useSelector((state) => state.join);
+    error: siginingError,
+    userInfo: user,
+  } = useSelector((state) => state.user);
   const onSubmit = (e) => {
     dispatch({
-      type: USER_JOIN_RESET,
+      type: USER_SIGNIN_RESET,
     });
     e.preventDefault();
-    const isValid = isValidUserInfo(userInfo);
+    const isValid = isValidSignIn(userInfo);
     if (typeof isValid !== "boolean") {
       setError(isValid);
       return;
@@ -49,19 +53,20 @@ const Join = () => {
       message: "",
     });
 
-    dispatch(registerUser(userInfo));
+    dispatch(signIn(userInfo));
   };
   const router = useRouter();
   useEffect(() => {
-    if (success) {
+    if (user) {
+      dispatch({
+        type: USER_JOIN_ERROR,
+        payload: null,
+      });
       setTimeout(() => {
-        dispatch({
-          type: USER_JOIN_RESET,
-        });
-        router.push("/");
+        // router.push("/");
       }, 1500);
     }
-  }, [success, joiningError]);
+  }, [user, siginingError]);
   return (
     <div className=" w-full h-full min-h-screen flex items-center justify-center">
       <form
@@ -95,17 +100,14 @@ const Join = () => {
             <Spinner />
           </div>
         )}
-        {joiningError && (
+        {siginingError && (
           <div className="mb-4">
-            <Alert message={joiningError} type={TYPES.ERROR} />
+            <Alert message={siginingError} type={TYPES.ERROR} />
           </div>
         )}
-        {success && (
+        {user && (
           <div className="mb-4">
-            <Alert
-              message={`Welcom ${userInfo.name} to Key To Learn`}
-              type={TYPES.SUCCESS}
-            />
+            <Alert message={`Welcom ${user.name} `} type={TYPES.SUCCESS} />
           </div>
         )}
 
@@ -150,4 +152,4 @@ const Join = () => {
   );
 };
 
-export default Join;
+export default SignIn;

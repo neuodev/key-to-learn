@@ -45,7 +45,7 @@ export const signIn = (userInfo) => async (dispatch) => {
     },
   };
   try {
-    const { data } = await axios.post("/api/users/login", userInfo, conifg);
+    const { data } = await axios.post("/api/v1/users/login", userInfo, conifg);
     console.log(data);
     dispatch({
       type: USER_SIGNIN_SUCCESS,
