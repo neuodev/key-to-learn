@@ -3,3 +3,5 @@ export const TYPES = {
   WARRNING: "WORRNING",
   SUCCESS: "SUCCESS",
 };
+
+export const USER_INFO = "user-info";
