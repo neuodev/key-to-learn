@@ -1,3 +1,7 @@
+const jwt = require("jsonwebtoken");
+const Post = require("../models/Post");
+const User = require("../models/User");
+
 const advancedResults = (model, populate) => async (req, res, next) => {
   let query;
 
@@ -19,8 +23,37 @@ const advancedResults = (model, populate) => async (req, res, next) => {
     (match) => `$${match}`
   );
 
+  const queryObj = JSON.parse(queryStr);
+
+  // Works only for posts
+  let admin;
+  if (
+    req.headers.authorization &&
+    req.headers.authorization.startsWith("Bearer")
+  ) {
+    try {
+      const token = req.headers.authorization.split(" ")[1];
+
+      const decoded = jwt.verify(token, process.env.JWT_SECRET);
+
+      admin = await User.findById(decoded.id).select("-password");
+      if (!admin.isAdmin) {
+        res.status(401);
+        throw new Error("Not authorized, token failed");
+      }
+    } catch (error) {
+      console.error(error);
+      res.status(401);
+      throw new Error("Not authorized, token failed");
+    }
+  }
+
+  if (model.collection.collectionName === "posts" && !admin) {
+    queryObj.published = true;
+  }
+
   // Finding resource
-  query = model.find(JSON.parse(queryStr));
+  query = model.find(queryObj);
 
   // Select Fields
   if (req.query.select) {
