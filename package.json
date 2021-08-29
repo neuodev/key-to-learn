@@ -4,7 +4,8 @@
   "description": "Blog webiste about web development, ML and DS",
   "main": "server.js",
   "scripts": {
-    "start": "nodemon server.js",
+    "start": "node server.js",
+    "dev": "nodemon server.js",
     "import": "node seeder.js",
     "distroy": "node seeder.js -d",
     "start:client": "npm run dev --prefix client"

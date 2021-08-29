@@ -127,18 +127,25 @@ const Create = () => {
         message: createPostState.success,
       });
     }
+
+    return () => {
+      setAlert({
+        type: "",
+        message: "",
+      });
+    };
   }, [createPostState]);
   return (
     <div className="flex max-h-screen ">
       <SideBar />
       <div className="w-full h-screen border-none max-h-screen overflow-y-scroll bg-gray-50 p-4">
         {createPostState.loading && (
-          <div className="my-3 flex items-center justify-center">
+          <div className="mb-3 flex items-center justify-center">
             <Spinner />
           </div>
         )}
         {alert.message && (
-          <div className="my-3">
+          <div className="mb-3">
             <Alert type={alert.type} message={alert.message} />
           </div>
         )}
