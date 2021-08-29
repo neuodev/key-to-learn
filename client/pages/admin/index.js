@@ -3,6 +3,10 @@ import React, { useEffect, useState } from "react";
 import Sidebar from "../../components/Admin/Sidebar";
 import { useSelector } from "react-redux";
 import { useRouter } from "next/dist/client/router";
+import PostsList from "../../components/Admin/posts/PostsList";
+import Spinner from "../../components/common/Spinner";
+import Alert from "../../components/common/Alert";
+import { TYPES } from "../../utils";
 const Admin = () => {
   const [allPosts, setAllPosts] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -20,6 +24,7 @@ const Admin = () => {
   });
   useEffect(() => {
     const fetchPosts = async () => {
+      setLoading(true);
       const { data } = await axios.get("/api/v1/posts", {
         params: {
           select: "domain,header,slug,likes,createdAt,updatedAt,published",
@@ -29,7 +34,12 @@ const Admin = () => {
           Authorization: `Bearer ${user.userInfo.token}`,
         },
       });
-      console.log(data);
+      setLoading(false);
+      setAlert({
+        type: "",
+        message: "",
+      });
+      setAllPosts(data.data);
     };
 
     fetchPosts();
@@ -39,7 +49,17 @@ const Admin = () => {
       <div className="">
         <Sidebar />
       </div>
-      <div className="">Content</div>
+      <div className="bg-gray-50 w-full ">
+        {loading ? (
+          <div className="flex items-center justify-center w-full h-full">
+            <Spinner />
+          </div>
+        ) : alert.message ? (
+          <Alert tyep={TYPES.ERROR} message={alert.message} />
+        ) : (
+          <PostsList posts={allPosts} />
+        )}
+      </div>
     </div>
   );
 };
