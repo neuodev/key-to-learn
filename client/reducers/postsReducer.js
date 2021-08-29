@@ -2,6 +2,9 @@ import {
   FEATURED_POSTS_ERROR,
   FEATURED_POSTS_REQUEST,
   FEATURED_POSTS_SUCCESS,
+  POST_CREATE_ERROR,
+  POST_CREATE_REQUEST,
+  POST_CREATE_SUCCESS,
 } from "../actions/constants";
 const featuredPostsInitialState = {
   posts: [],
@@ -31,6 +34,41 @@ export const featuredPostsReducer = (
         loading: false,
         error: null,
         posts: payload,
+      };
+
+    default:
+      return state;
+  }
+};
+
+export const createPostReducer = (
+  state = {
+    loading: false,
+    error: null,
+    success: null,
+  },
+  { type, payload }
+) => {
+  switch (type) {
+    case POST_CREATE_REQUEST:
+      return {
+        ...state,
+        loading: true,
+        error: null,
+        success: null,
+      };
+    case POST_CREATE_ERROR:
+      return {
+        ...state,
+        loading: false,
+        eror: payload,
+      };
+    case POST_CREATE_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        error: null,
+        success: payload,
       };
 
     default:

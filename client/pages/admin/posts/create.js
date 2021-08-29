@@ -85,6 +85,10 @@ const Create = () => {
       text: "Load From LS",
       onClick: loadFromLS,
     },
+    {
+      text: "Publish",
+      onClick: () => {},
+    },
   ];
 
   return (

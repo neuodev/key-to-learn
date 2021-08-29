@@ -1,9 +1,9 @@
 import {
   USER_JOIN_ERROR,
-  USER_JOIN_REQUEIST,
+  USER_JOIN_REQUEST,
   USER_JOIN_SUCCESS,
   USER_SIGNIN_ERROR,
-  USER_SIGNIN_REQUEIST,
+  USER_SIGNIN_REQUESTUSER_JOIN_REQUEST,
   USER_SIGNIN_SUCCESS,
 } from "./constants";
 import axios from "axios";
@@ -11,7 +11,7 @@ import { USER_INFO } from "../utils";
 
 export const registerUser = (userInfo) => async (dispatch) => {
   dispatch({
-    type: USER_JOIN_REQUEIST,
+    type: USER_JOIN_REQUEST,
   });
   const conifg = {
     headers: {
@@ -39,7 +39,7 @@ export const registerUser = (userInfo) => async (dispatch) => {
 
 export const signIn = (userInfo) => async (dispatch) => {
   dispatch({
-    type: USER_SIGNIN_REQUEIST,
+    type: USER_SIGNIN_REQUESTUSER_JOIN_REQUEST,
   });
   const conifg = {
     headers: {

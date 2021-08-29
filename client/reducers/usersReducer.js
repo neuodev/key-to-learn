@@ -1,10 +1,10 @@
 import {
   USER_JOIN_ERROR,
-  USER_JOIN_REQUEIST,
+  USER_JOIN_REQUEST,
   USER_JOIN_RESET,
   USER_JOIN_SUCCESS,
   USER_SIGNIN_ERROR,
-  USER_SIGNIN_REQUEIST,
+  USER_SIGNIN_REQUEST,
   USER_SIGNIN_RESET,
   USER_SIGNIN_SUCCESS,
 } from "../actions/constants";
@@ -18,7 +18,7 @@ export const registerUserReducer = (
   { type, payload }
 ) => {
   switch (type) {
-    case USER_JOIN_REQUEIST:
+    case USER_JOIN_REQUEST:
       return {
         ...state,
         loading: true,
@@ -58,7 +58,7 @@ export const userReduser = (
   { type, payload }
 ) => {
   switch (type) {
-    case USER_SIGNIN_REQUEIST:
+    case USER_SIGNIN_REQUEST:
       return {
         ...state,
         loading: true,
