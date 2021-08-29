@@ -1,8 +1,14 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCode } from "@fortawesome/free-solid-svg-icons";
 import { isValidUserInfo } from "../utils/user";
+import { useSelector, useDispatch } from "react-redux";
+import { registerUser } from "../actions/userActions";
+import Alert from "../components/common/Alert";
+import { TYPES } from "../utils";
+import { USER_JOIN_RESET } from "../actions/constants";
+import Spinner from "../components/common/Spinner";
 
 const Join = () => {
   const [userInfo, setUserInfo] = useState({
@@ -21,8 +27,16 @@ const Join = () => {
       [e.target.name]: e.target.value,
     });
   };
-
+  const dispatch = useDispatch();
+  let {
+    loading,
+    error: joiningError,
+    success,
+  } = useSelector((state) => state.join);
   const onSubmit = (e) => {
+    dispatch({
+      type: USER_JOIN_RESET,
+    });
     e.preventDefault();
     const isValid = isValidUserInfo(userInfo);
     if (typeof isValid !== "boolean") {
@@ -34,7 +48,20 @@ const Join = () => {
       field: "",
       message: "",
     });
+
+    dispatch(registerUser(userInfo));
   };
+
+  useEffect(() => {
+    if (success) {
+      setTimeout(() => {
+        // dispatch({
+        //   type: USER_JOIN_RESET,
+        // });
+        alert("redirect");
+      }, 5000);
+    }
+  }, [success, joiningError]);
   return (
     <div className=" w-full h-full min-h-screen flex items-center justify-center">
       <form
@@ -63,7 +90,24 @@ const Join = () => {
             </Link>
           </p>
         </div>
-
+        {loading && (
+          <div>
+            <Spinner />
+          </div>
+        )}
+        {joiningError && (
+          <div className="mb-4">
+            <Alert message={joiningError} type={TYPES.ERROR} />
+          </div>
+        )}
+        {success && (
+          <div className="mb-4">
+            <Alert
+              message={`Welcom ${userInfo.name} to Key To Learn`}
+              type={TYPES.SUCCESS}
+            />
+          </div>
+        )}
         <div className="flex flex-col justify-center mb-4">
           <label className="font-medium mb-1 text-gray-600 tracking-wider">
             Username
