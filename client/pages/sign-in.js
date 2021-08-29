@@ -13,7 +13,6 @@ import { useRouter } from "next/dist/client/router";
 
 const Join = () => {
   const [userInfo, setUserInfo] = useState({
-    name: "",
     password: "",
     email: "",
   });
@@ -83,10 +82,10 @@ const Join = () => {
         </div>
         <div className="text-center font-medium mb-4 text-gray-500">
           <p>
-            Aleady have an account?{" "}
-            <Link href="/sign-in">
+            Don't have an account ?{" "}
+            <Link href="/join">
               <span className="inline-block text-blue-400 hover:underline cursor-pointer">
-                Sign In
+                Join Us
               </span>
             </Link>
           </p>
@@ -109,22 +108,7 @@ const Join = () => {
             />
           </div>
         )}
-        <div className="flex flex-col justify-center mb-4">
-          <label className="font-medium mb-1 text-gray-600 tracking-wider">
-            Username
-          </label>
-          <input
-            className="py-3 px-2 rounded-md bg-gray-100 placeholder-gray-400"
-            placeholder="Enter your name"
-            type="text"
-            name="name"
-            value={userInfo.name}
-            onChange={updateState}
-          />
-          {error.field === "name" && (
-            <p className="text-red-400 text-xs">{error.message}</p>
-          )}
-        </div>
+
         <div className="flex flex-col justify-center mb-4">
           <label className="font-medium mb-1 text-gray-600 tracking-wider">
             Email
@@ -159,7 +143,7 @@ const Join = () => {
         </div>
 
         <button className="w-full mb-4 py-3 px-2 bg-blue-100 text-blue-900 uppercase tracking-wider font-medium hover:bg-blue-200 rounded-md  ">
-          Sign Up
+          Sign In
         </button>
       </form>
     </div>
