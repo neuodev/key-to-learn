@@ -37,6 +37,22 @@ export const useClearDataCallback = (editor) => {
   );
 };
 
+// Set editor data after initializing
+export const useSetData = (editor, data) => {
+  useEffect(() => {
+    if (!editor || !data) {
+      return;
+    }
+
+    editor.isReady.then(() => {
+      // fixing an annoying warning in Chrome `addRange(): The given range isn't in document.`
+      setTimeout(() => {
+        editor.render(data);
+      }, 100);
+    });
+  }, [editor, data]);
+};
+
 // load saved data
 export const useLoadData = () => {
   const [data, setData] = useState(null);

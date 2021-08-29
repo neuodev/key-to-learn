@@ -76,7 +76,7 @@ export const EditorContainer = ({ editorRef, children, data, options }) => {
   return (
     <React.Fragment>
       {!children && (
-        <div className="shadow-md rounded-md " id="editor-js"></div>
+        <div className="shadow-lg rounded-md ring-2 " id="editor-js"></div>
       )}
       {children}
     </React.Fragment>

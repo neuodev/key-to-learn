@@ -30,12 +30,13 @@ const savedPost = "draft-post";
 const Create = () => {
   const [editor, setEditor] = useState(null);
   const [publish, setPublised] = useState(false);
-  const [header, setHeader] = useState();
+  const [header, setHeader] = useState("");
   const [level, setLevel] = useState(LEVELS[0]);
   const [category, setCategory] = useState(CATEGORIES[0]);
   const [subcategory, setSubcategory] = useState(SUB_CATEGORY[0]);
   const [tags, setTags] = useState("");
   const [editorData, setEditorData] = useState({});
+  const [shouldLoadData, setShouldData] = useState(false);
   const [alert, setAlert] = useState({
     type: null,
     message: null,
@@ -76,12 +77,17 @@ const Create = () => {
     setSubcategory(data.subcategory);
     setPublised(data.publish);
     setLevel(data.level);
-    setEditorData(data.data);
-    console.log(data);
+    editor.isReady.then(() => {
+      // fixing an annoying warning in Chrome `addRange(): The given range isn't in document.`
+      setTimeout(() => {
+        editor.render(data.data);
+      }, 100);
+    });
   };
 
   const dispatch = useDispatch();
   const createPostState = useSelector((state) => state.createPost);
+
   const publishPost = async () => {
     const out = await editor.save();
     dispatch(
