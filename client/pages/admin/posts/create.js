@@ -59,7 +59,10 @@ const Create = () => {
       data: out,
     });
     localStorage.setItem(savedPost, data);
-    console.log("Post Saved To localstorage");
+    setAlert({
+      type: TYPES.SUCCESS,
+      message: "Post saved as a draft",
+    });
   };
 
   const loadFromLS = () => {
@@ -68,7 +71,10 @@ const Create = () => {
       : null;
 
     if (!data) {
-      alert("You don't have any posts stored in the localStorage");
+      setAlert({
+        type: TYPES.ERROR,
+        message: "You don't have any posts stored in the localStorage",
+      });
       return;
     }
     setHeader(data.header);
