@@ -120,7 +120,7 @@ const SideBar = ({ showSideBar, hideSidebar }) => {
                   <li
                     onClick={hideSidebar}
                     key={tab.title}
-                    className=" font-medium text-lg text-center mb-2"
+                    className="font-medium text-lg text-center mb-2"
                   >
                     <Link href={tab.path}>
                       <p
