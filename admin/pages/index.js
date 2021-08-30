@@ -48,7 +48,6 @@ const Admin = () => {
         type: "",
         message: "",
       });
-      console.log(data);
       setAllPosts(data.data);
       setCount(data.count);
     };
@@ -73,7 +72,7 @@ const Admin = () => {
     <div className="bg-gray-50 w-full h-screen pt-5 ">
       <div className="flex items-center justify-between px-5 ">
         <h1 className="text-4xl">Posts</h1>
-        <Link href="/admin/posts/create">
+        <Link href="/posts/create">
           <p className=" w-40 text-lg cursor-pointer py-3 flex items-center justify-center bg-green-100 hover:bg-green-200 rounded-lg font-medium uppercase tracking-wider text-green-700">
             New Post
           </p>

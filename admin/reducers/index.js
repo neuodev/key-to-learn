@@ -6,10 +6,13 @@ import {
   updateCategory,
   deleteCategory,
 } from "./categoriesReducer";
+
+import { createPostReducer } from "./postReducer";
 export default combineReducers({
   user: userReduser,
   categories: categoriesReducer,
   createCategory,
   updateCategory,
   deleteCategory,
+  createPost: createPostReducer,
 });
