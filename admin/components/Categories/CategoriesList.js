@@ -9,16 +9,17 @@ const CategoriesList = ({ categories }) => {
   const [showCreateDialog, setShowCreateDialog] = useState(false);
   const [category, setCategory] = useState("");
   const [subcategory, setSubcategory] = useState(false);
-
+  const [catId, setCatId] = useState(null);
   const hideDialog = () => {
     setShowUpdateDialog(false);
     setShowCreateDialog(false);
   };
 
   const updateCategory = (c) => {
-    setCategory(c);
+    setCategory(c.name);
     setSubcategory("");
     setShowUpdateDialog(true);
+    setCatId(c._id);
   };
   return (
     <div className="mt-9">
@@ -26,7 +27,7 @@ const CategoriesList = ({ categories }) => {
         <div className="mb-10" key={cat._id}>
           <div className="inline-block">
             <div
-              onClick={() => updateCategory(cat.name)}
+              onClick={() => updateCategory(cat)}
               className="text-gray-700 hover:text-blue-500 hover:underline flex items-center justify-start"
             >
               <p className="cursor-pointer  mr-2 text-3xl ">{cat.name}</p>
@@ -75,6 +76,7 @@ const CategoriesList = ({ categories }) => {
         hide={hideDialog}
         category={category}
         subcategory={subcategory}
+        id={catId}
       />
       <CreateNewCategory
         show={showCreateDialog}

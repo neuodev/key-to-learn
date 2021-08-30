@@ -27,7 +27,9 @@ module.exports.updateCategory = asyncHandler(async (req, res, next) => {
     throw new Error("Category not found");
   }
 
-  category.name = newName.trim() || category.name;
+  if (newName) {
+    category.name = newName.trim() || category.name;
+  }
   if (newSubcategory && oldSubcategoryName) {
     category.subcategories = category.subcategories.filter(
       (sub) => sub.toString() !== oldSubcategoryName.toString()
@@ -51,8 +53,8 @@ module.exports.createCategegory = asyncHandler(async (req, res, next) => {
   }
   if (!category) {
     await Category.create({
-      name,
-      subcategories: subcategory ? [subcategory] : [],
+      name: name.trim().replace(/ /g, "-"),
+      subcategories: subcategory ? [subcategory.trim().replace(/ /g, "-")] : [],
     });
   } else {
     const catSet = new Set(category.subcategories);
@@ -60,7 +62,7 @@ module.exports.createCategegory = asyncHandler(async (req, res, next) => {
       res.status(400);
       throw new Error("Subcategory Already Exist");
     }
-    category.subcategories.push(subcategory);
+    category.subcategories.push(subcategory.trim().replace(/ /g, "-"));
     await category.save();
   }
   res.status(200).json({ success: "Category created successfully" });

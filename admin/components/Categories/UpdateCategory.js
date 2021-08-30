@@ -1,9 +1,19 @@
 import React, { useEffect, useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faChevronCircleDown } from "@fortawesome/free-solid-svg-icons";
-const UpdateCategory = ({ subcategory, category, show, hide }) => {
+import { useSelector, useDispatch } from "react-redux";
+import { updateCategory } from "../../actions/categories";
+import Spinner from "../common/Spinner";
+import Alert from "../common/Alert";
+import { TYPES } from "../../utils";
+import { UPDATE_CATEGORIES_RESET } from "../../actions/constants";
+
+const UpdateCategory = ({ subcategory, category, show, hide, id }) => {
   const [newName, setNewName] = useState("");
   const ref = React.useRef();
+  const dispatch = useDispatch();
+  const updateCategoryState = useSelector((state) => state.updateCategory);
+
   useEffect(() => {
     const checkIfClickedOutside = (e) => {
       if (show && ref.current && !ref.current.contains(e.target)) {
@@ -13,8 +23,30 @@ const UpdateCategory = ({ subcategory, category, show, hide }) => {
     document.addEventListener("mousedown", checkIfClickedOutside);
     return () => {
       document.removeEventListener("mousedown", checkIfClickedOutside);
+      setNewName("");
+      dispatch({
+        type: UPDATE_CATEGORIES_RESET,
+      });
     };
   }, [ref, show]);
+  const update = () => {
+    if (!newName) return;
+    if (category && !subcategory) {
+      dispatch(
+        updateCategory(id, {
+          newName,
+        })
+      );
+    } else if (subcategory) {
+      dispatch(
+        createCategory(id, {
+          oldSubcategoryName: subcategory,
+          newSubcategory: newName,
+        })
+      );
+    }
+    setNewName("");
+  };
   return (
     <div
       ref={ref}
@@ -23,6 +55,27 @@ const UpdateCategory = ({ subcategory, category, show, hide }) => {
       }`}
     >
       <div className="flex flex-col items-center">
+        <h1 className="mb-4 bg-blue-100 px-3 py-2 rounded-full text-blue-900 ">
+          Create New {subcategory ? "Subcategory" : "Category"}
+        </h1>
+        {updateCategoryState.loading ? (
+          <div>
+            <Spinner />
+          </div>
+        ) : updateCategoryState.error ? (
+          <div className="w-full mb-4">
+            <Alert message={updateCategoryState.error} type={TYPES.ERROR} />
+          </div>
+        ) : (
+          updateCategoryState.success && (
+            <div>
+              <Alert
+                message={updateCategoryState.success}
+                type={TYPES.SUCCESS}
+              />
+            </div>
+          )
+        )}
         <div className="text-xl mb-4">
           Change{" "}
           <span className="font-medium">
@@ -47,7 +100,10 @@ const UpdateCategory = ({ subcategory, category, show, hide }) => {
           } Name`}
         />
 
-        <button className="bg-blue-100 rounded-lg py-3 uppercase tracking-wider font-semibold text-blue-900 w-full">
+        <button
+          onClick={update}
+          className="bg-blue-100 rounded-lg py-3 uppercase tracking-wider font-semibold text-blue-900 w-full"
+        >
           Update
         </button>
       </div>
