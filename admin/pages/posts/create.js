@@ -21,7 +21,7 @@ const LEVELS = ["BASICS", "INTERMEDIATE", "ADVANCED"];
 const savedPost = "draft-post";
 const Create = () => {
   const [editor, setEditor] = useState(null);
-  const [publish, setPublised] = useState(false);
+  const [publish, setPublised] = useState(true);
   const [header, setHeader] = useState("");
   const [level, setLevel] = useState(LEVELS[0]);
   const [category, setCategory] = useState(null);
@@ -92,7 +92,7 @@ const Create = () => {
       dispatch(getCategories());
     }
   }, []);
-  const publishPost = async () => {
+  const publishPost = async (shouldPublish) => {
     const out = await editor.save();
     dispatch(
       createPost({
@@ -103,15 +103,13 @@ const Create = () => {
           subcategory: [subcategory],
           tags: tags.split(","),
         },
-        published: publish,
+        published: shouldPublish,
         body: out,
       })
     );
   };
+
   const OPTIONS_LIST = [
-    {
-      text: "Save To DB",
-    },
     {
       text: "Save To LS",
       onClick: saveToLS,
@@ -121,8 +119,12 @@ const Create = () => {
       onClick: loadFromLS,
     },
     {
+      text: "Draft",
+      onClick: () => publishPost(false),
+    },
+    {
       text: "Publish",
-      onClick: publishPost,
+      onClick: () => publishPost(true),
     },
   ];
 
