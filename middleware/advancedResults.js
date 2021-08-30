@@ -54,7 +54,7 @@ const advancedResults = (model, populate) => async (req, res, next) => {
 
   // Finding resource
   query = model.find(queryObj);
-
+  const count = await model.countDocuments(queryObj);
   // Select Fields
   if (req.query.select) {
     const fields = req.query.select.split(",").join(" ");
@@ -104,7 +104,7 @@ const advancedResults = (model, populate) => async (req, res, next) => {
 
   res.advancedResults = {
     success: true,
-    count: results.length,
+    count,
     pagination,
     data: results,
   };
