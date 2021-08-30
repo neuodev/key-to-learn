@@ -7,14 +7,15 @@ import { TYPES } from "../utils";
 import CategoriesList from "../components/Categories/CategoriesList";
 
 const Categories = () => {
+  const createCategoryState = useSelector((state) => state.createCategory);
   const categories = useSelector((state) => state.categories);
   const dispatch = useDispatch();
 
   useEffect(() => {
     dispatch(getCategories());
-  }, []);
+  }, [createCategoryState]);
   return (
-    <div className="w-full bg-gray-100 h-screen p-4">
+    <div className="w-full bg-gray-100 h-screen overflow-y-scroll p-4">
       <div>
         <h1 className="text-4xl mb-4">Categories & Tags</h1>
       </div>

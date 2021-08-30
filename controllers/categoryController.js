@@ -45,15 +45,24 @@ module.exports.createCategegory = asyncHandler(async (req, res, next) => {
   const { name, subcategory } = req.body;
   const categories = await Category.find({ name });
   const category = categories[0];
+  if (name && !subcategory && category) {
+    res.status(400);
+    throw new Error("Category Aleady exist");
+  }
   if (!category) {
     await Category.create({
       name,
-      subcategories: [subcategory],
+      subcategories: subcategory ? [subcategory] : [],
     });
   } else {
-    category.categories.push(subcategory);
+    const catSet = new Set(category.subcategories);
+    if (catSet.has(subcategory)) {
+      res.status(400);
+      throw new Error("Subcategory Already Exist");
+    }
+    category.subcategories.push(subcategory);
+    await category.save();
   }
-  await category.save();
   res.status(200).json({ success: "Category created successfully" });
 });
 

@@ -1,9 +1,13 @@
 import React, { useEffect, useState } from "react";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faChevronCircleDown } from "@fortawesome/free-solid-svg-icons";
+import { useSelector, useDispatch } from "react-redux";
+import { createCategory } from "../../actions/categories";
+
 const CreateNewCategory = ({ subcategory, category, show, hide }) => {
   const [newName, setNewName] = useState("");
   const ref = React.useRef();
+  const dispatch = useDispatch();
+  const createCategoryState = useSelector((state) => state.createCategory);
+
   useEffect(() => {
     const checkIfClickedOutside = (e) => {
       if (show && ref.current && !ref.current.contains(e.target)) {
@@ -13,16 +17,39 @@ const CreateNewCategory = ({ subcategory, category, show, hide }) => {
     document.addEventListener("mousedown", checkIfClickedOutside);
     return () => {
       document.removeEventListener("mousedown", checkIfClickedOutside);
+      setNewName("");
     };
   }, [ref, show]);
+
+  const create = () => {
+    if (!newName) return;
+    if (category && !subcategory) {
+      dispatch(
+        createCategory({
+          name: newName,
+        })
+      );
+    } else if (subcategory) {
+      dispatch(
+        createCategory({
+          subcategory: newName,
+          name: category,
+        })
+      );
+    }
+    setNewName("");
+  };
   return (
     <div
       ref={ref}
-      className={` top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2  w-1/2  p-4 rounded-lg shadow-lg flex items-center justify-center bg-white ${
+      className={` top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2  w-1/2  p-4 py-10 rounded-lg shadow-lg flex items-center justify-center bg-white ${
         show ? "absolute" : "hidden"
       }`}
     >
       <div className="flex flex-col items-center">
+        <h1 className="mb-4 text-lg text-gray-600">
+          Create New {category && !subcategory ? "Category" : "Subcategory"}
+        </h1>
         <input
           value={newName}
           onChange={(e) => setNewName(e.target.value)}
@@ -32,7 +59,10 @@ const CreateNewCategory = ({ subcategory, category, show, hide }) => {
           } Name`}
         />
 
-        <button className="bg-blue-100 rounded-lg py-3 uppercase tracking-wider font-semibold text-blue-900 w-full">
+        <button
+          onClick={create}
+          className="bg-blue-100 rounded-lg py-3 uppercase tracking-wider font-semibold text-blue-900 w-full"
+        >
           Create
         </button>
       </div>

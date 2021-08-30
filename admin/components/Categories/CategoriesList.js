@@ -5,11 +5,8 @@ import UpdateCategory from "./UpdateCategory";
 import CreateNewCategory from "./CreateNewCategory";
 
 const CategoriesList = ({ categories }) => {
-  //   categories[0].subcategories.push("lorem", "heksfj", "Machine Learning");
-  //   categories[1].subcategories.push("lorem", "heksfj", "Machine Learning");
   const [showUpdateDialog, setShowUpdateDialog] = useState(false);
   const [showCreateDialog, setShowCreateDialog] = useState(false);
-
   const [category, setCategory] = useState("");
   const [subcategory, setSubcategory] = useState(false);
 
@@ -45,7 +42,14 @@ const CategoriesList = ({ categories }) => {
                 </button>
               </p>
             ))}
-            <button className="" onClick={() => setShowCreateDialog(true)}>
+            <button
+              className=""
+              onClick={() => {
+                setShowCreateDialog(true);
+                setSubcategory(true);
+                setCategory(cat.name);
+              }}
+            >
               <p className="mr-4 p-4 px-8 bg-blue-100 border border-blue-500 rounded-full text-blue-600 font-medium cursor-pointer hover:bg-blue-200 transition-colors duration-150">
                 <FontAwesomeIcon icon={faPlus} />
               </p>
@@ -53,6 +57,18 @@ const CategoriesList = ({ categories }) => {
           </div>
         </div>
       ))}
+      <button
+        className=""
+        onClick={() => {
+          setShowCreateDialog(true);
+          setSubcategory("");
+          setCategory(true);
+        }}
+      >
+        <p className="mr-4 p-4 px-8 bg-blue-100 border border-blue-500 rounded-full text-blue-600 font-medium cursor-pointer hover:bg-blue-200 transition-colors duration-150">
+          NEW CATEGORY <FontAwesomeIcon icon={faPlus} />
+        </p>
+      </button>
 
       <UpdateCategory
         show={showUpdateDialog}
