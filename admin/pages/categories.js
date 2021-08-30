@@ -27,9 +27,11 @@ const Categories = () => {
           <Alert message={categories.error} type={TYPES.ERROR} />
         </div>
       ) : (
-        <div className="w-full h-fll">
-          <CategoriesList categories={categories.categories} />
-        </div>
+        categories.categories && (
+          <div className="w-full h-fll">
+            <CategoriesList categories={categories.categories} />
+          </div>
+        )
       )}
     </div>
   );
