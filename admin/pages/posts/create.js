@@ -91,6 +91,13 @@ const Create = () => {
     if (!categories.categories) {
       dispatch(getCategories());
     }
+
+    return () => {
+      setAlert({
+        type: "",
+        message: "",
+      });
+    };
   }, []);
   const publishPost = async (shouldPublish) => {
     const out = await editor.save();

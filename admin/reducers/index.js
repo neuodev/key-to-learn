@@ -7,7 +7,7 @@ import {
   deleteCategory,
 } from "./categoriesReducer";
 
-import { createPostReducer } from "./postReducer";
+import { createPostReducer, deletePost } from "./postReducer";
 export default combineReducers({
   user: userReduser,
   categories: categoriesReducer,
@@ -15,4 +15,5 @@ export default combineReducers({
   updateCategory,
   deleteCategory,
   createPost: createPostReducer,
+  deletePost,
 });

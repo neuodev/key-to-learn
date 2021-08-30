@@ -22,11 +22,15 @@ const TITLES = [
   },
   {
     text: "Likes",
-    span: "col-span-1",
+    span: "col-span-1 text-center",
   },
   {
     text: "Publised",
-    span: "col-span-2",
+    span: "col-span-1 text-center",
+  },
+  {
+    text: "Del",
+    span: "col-span-1 text-center",
   },
 ];
 const PostsList = ({ posts }) => {
