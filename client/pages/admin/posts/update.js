@@ -1,12 +1,7 @@
 import React, { useEffect, useState } from "react";
 import SideBar from "../../../components/Admin/Sidebar";
 import dynamic from "next/dynamic";
-import {
-  useLoadData,
-  useSaveCallback,
-  useSetData,
-  useClearDataCallback,
-} from "../../../Editor/hooks";
+import { useSaveCallback, useClearDataCallback } from "../../../Editor/hooks";
 import { options } from "../../../Editor";
 import Switch from "@material-ui/core/Switch";
 import OptionsMenu from "../../../components/Posts/OptionsMenu";
@@ -16,6 +11,7 @@ import Alert from "../../../components/common/Alert";
 import { TYPES } from "../../../utils";
 import Spinner from "../../../components/common/Spinner";
 import axios from "axios";
+import { useRouter } from "next/dist/client/router";
 
 const Editor = dynamic(
   () => import("../../../Editor/editor").then((mod) => mod.EditorContainer),
@@ -26,7 +22,10 @@ const Editor = dynamic(
 const LEVELS = ["BASICS", "INTERMEDIATE", "ADVANCED"];
 const CATEGORIES = ["WEB", "ML", "DS", "DEVOPS"];
 const SUB_CATEGORY = ["SUB1", "SUB2", "SUB3"];
-
+const DEFAULT_ALERT = {
+  type: "",
+  message: "",
+};
 const savedPost = "draft-post";
 const Create = () => {
   const [editor, setEditor] = useState(null);
@@ -37,13 +36,14 @@ const Create = () => {
   const [subcategory, setSubcategory] = useState(SUB_CATEGORY[0]);
   const [tags, setTags] = useState("");
   const [editorData, setEditorData] = useState({});
-  const [shouldLoadData, setShouldData] = useState(false);
+  const [shouldLoadData, setShouldData] = useState(true);
   const [loading, setLoading] = useState(false);
   const [alert, setAlert] = useState({
     type: null,
     message: null,
   });
   // save handler
+  const router = useRouter();
   const onSave = useSaveCallback(editor);
 
   // clear data callback
@@ -124,13 +124,53 @@ const Create = () => {
       onClick: updatePost,
     },
   ];
-
+  const user = useSelector((state) => state.user);
   useEffect(() => {
+    setAlert(DEFAULT_ALERT);
+    if (!router.query.title) {
+      router.push("/admin");
+      return;
+    }
+
+    if (!user.userInfo || !user.userInfo.isAdmin) {
+      router.push("/");
+      return;
+    }
     const fetchPost = async () => {
+      setLoading(true);
       try {
-        const { data } = await axios.put("/api/v1/posts");
-        console.log(data);
+        const { data } = await axios.get("/api/v1/posts", {
+          params: {
+            slug: router.query.title,
+          },
+          headers: {
+            "content-type": "application/json",
+            Authorization: `Bearer ${user.userInfo.token}`,
+          },
+        });
+        if (data.data.length === 0) {
+          setAlert({
+            type: TYPES.ERROR,
+            message: "Post Not Found",
+          });
+          return;
+        }
+
+        const fetchedPost = data.data[0];
+        fetchedPost.body.blocks = fetchedPost.body.blocks.map((b) => ({
+          ...b,
+          data: JSON.parse(b.data),
+        }));
+        setEditorData(fetchedPost.body);
+        setHeader(fetchedPost.header);
+        setPublised(fetchedPost.published);
+        setTags(fetchedPost.domain.tags.concat(","));
+        setLevel(fetchedPost.domain.level);
+        setCategory(fetchedPost.domain.categories[0]);
+        setSubcategory(fetchedPost.domain.subcategory[0]);
+        setLoading(false);
       } catch (error) {
+        setLoading(false);
         setAlert({
           type: TYPES.ERROR,
           message:
@@ -140,8 +180,23 @@ const Create = () => {
         });
       }
     };
-    fetchPost();
-  }, []);
+    if (!header) {
+      fetchPost();
+    }
+    if (editor && editorData && shouldLoadData) {
+      // Map response from json to normal javascript obj
+      editor.isReady.then(() => {
+        setTimeout(() => {
+          setShouldData(false);
+          editor.render(editorData);
+        }, 1000);
+      });
+    }
+    return () => {
+      setAlert(DEFAULT_ALERT);
+      setLoading(false);
+    };
+  }, [router, editor, editorData]);
 
   useEffect(() => {
     if (createPostState.error) {
@@ -158,17 +213,14 @@ const Create = () => {
     }
 
     return () => {
-      setAlert({
-        type: "",
-        message: "",
-      });
+      setAlert(DEFAULT_ALERT);
     };
   }, [createPostState]);
   return (
     <div className="flex max-h-screen ">
       <SideBar />
       <div className="w-full h-screen border-none max-h-screen overflow-y-scroll bg-gray-50 p-4">
-        {createPostState.loading && (
+        {loading && (
           <div className="mb-3 flex items-center justify-center">
             <Spinner />
           </div>
@@ -211,15 +263,16 @@ const Create = () => {
         <div className="grid grid-cols-12 gap-4 mb-9">
           <div className="col-span-3">
             <label
-              className={`p-1 px-2 font-medium inline-block rounded-md ${
+              onClick={() => setPublised(!publish)}
+              className={` cursor-pointer p-1 px-2 font-medium flex items-center justify-center rounded-md w-full h-full  ${
                 publish
-                  ? "bg-blue-400  text-blue-500"
-                  : "bg-red-300 text-red-700"
+                  ? "bg-blue-200  text-blue-500 hover:bg-blue-300"
+                  : "bg-gray-200 text-gray-700 hover:bg-gray-300"
               }`}
             >
               Publish
             </label>
-            <Switch color="primary" onChange={() => setPublised(!publish)} />
+            {/* <Switch color="primary" onChange={() => setPublised(!publish)} /> */}
           </div>
           <div className="col-span-3">
             <OptionsMenu

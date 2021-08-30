@@ -12,7 +12,7 @@ const PostItem = ({ post, idx }) => {
   return (
     <div className="grid grid-cols-12 w-full py-3 px-4">
       <div className="col-span-2 font-medium text-gray-700 cursor-pointer">
-        <Link href={`/admin/posts/update?${post.slug}`}>
+        <Link href={`/admin/posts/update?title=${post.slug}`}>
           <p className="truncate">{post.header}</p>
         </Link>
       </div>

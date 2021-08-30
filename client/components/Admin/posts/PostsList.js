@@ -29,7 +29,6 @@ const TITLES = [
   },
 ];
 const PostsList = ({ posts }) => {
-  console.log(posts);
   return (
     <div className=" w-full h-full max-h-full overflow-y-scroll p-4">
       <div className="flex items-center justify-between ">

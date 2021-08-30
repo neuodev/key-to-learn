@@ -99,11 +99,13 @@ const Create = () => {
     dispatch(
       createPost({
         header,
-        tags: tags.split(","),
-        publish,
-        level,
-        category,
-        subcategory,
+        domain: {
+          level,
+          categories: [category],
+          subcategory: [subcategory],
+          tags: tags.split(","),
+        },
+        published: publish,
         body: out,
       })
     );

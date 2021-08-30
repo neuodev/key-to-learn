@@ -18,7 +18,7 @@ const OptionsMenu = ({ label, options, currentOption, onChange }) => {
     onChange(option);
   };
   return (
-    <div className="w-full bg-gray-200 px-4 py-1 flex justify-center items-center rounded-md shadow-sm">
+    <div className="w-full bg-gray-200 h-full px-4 py-1 flex justify-center items-center rounded-md shadow-sm">
       <label className="text-lg font-medium mr-4">{label}</label>
       <Button
         fullWidth
@@ -26,7 +26,7 @@ const OptionsMenu = ({ label, options, currentOption, onChange }) => {
         aria-haspopup="true"
         onClick={handleClick}
       >
-        {currentOption}
+        <p className="truncate">{currentOption}</p>
       </Button>
       <Menu
         id="menu"
