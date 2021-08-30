@@ -19,7 +19,7 @@ const Admin = () => {
     type: "",
     message: "",
   });
-  // @todo redirect to login if it is not and admin
+  //redirect to login if it is not and admin
   const user = useSelector((state) => state.user);
   const router = useRouter();
   useEffect(() => {

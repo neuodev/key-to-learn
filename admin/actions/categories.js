@@ -102,24 +102,24 @@ export const updateCategory = (id, data) => async (dispatch, state) => {
   }
 };
 
-export const deleteCategory = (id, data) => async (dispatch, state) => {
+export const deleteCategory = (id, subcategory) => async (dispatch, state) => {
   dispatch({
     type: DELETE_CATEGORIES_REQUEST,
   });
 
   const user = state().user;
-  const conifg = {
-    headers: {
-      "content-type": "application/json",
-      Authorization: `Bearer ${user.userInfo.token}`,
-    },
-  };
+  const params = {};
+  if (subcategory) {
+    params.subcategory = subcategory;
+  }
   try {
-    const { data: message } = await axios.put(
-      `/api/v1/categories/${id}`,
-      data,
-      conifg
-    );
+    const { data: message } = await axios.delete(`/api/v1/categories/${id}`, {
+      headers: {
+        "content-type": "application/json",
+        Authorization: `Bearer ${user.userInfo.token}`,
+      },
+      params: params,
+    });
     dispatch({
       type: DELETE_CATEGORIES_SUCCESS,
       payload: message.success,

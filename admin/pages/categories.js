@@ -5,16 +5,24 @@ import Spinner from "../components/common/Spinner";
 import Alert from "../components/common/Alert";
 import { TYPES } from "../utils";
 import CategoriesList from "../components/Categories/CategoriesList";
+import { useRouter } from "next/dist/client/router";
 
 const Categories = () => {
   const createCategoryState = useSelector((state) => state.createCategory);
   const updateCategoryState = useSelector((state) => state.updateCategory);
+  const deleteCategoryState = useSelector((state) => state.deleteCategory);
   const categories = useSelector((state) => state.categories);
   const dispatch = useDispatch();
+  const user = useSelector((state) => state.user);
+  const router = useRouter();
 
   useEffect(() => {
     dispatch(getCategories());
-  }, [createCategoryState.success, updateCategoryState.success]);
+  }, [
+    createCategoryState.success,
+    updateCategoryState.success,
+    deleteCategoryState.loading,
+  ]);
   return (
     <div className="w-full bg-gray-100 h-screen overflow-y-scroll p-4">
       <div>

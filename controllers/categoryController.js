@@ -62,7 +62,9 @@ module.exports.createCategegory = asyncHandler(async (req, res, next) => {
       res.status(400);
       throw new Error("Subcategory Already Exist");
     }
-    category.subcategories.push(subcategory.trim().replace(/ /g, "-"));
+    category.subcategories.push(
+      subcategory.toLowerCase().trim().replace(/ /g, "-")
+    );
     await category.save();
   }
   res.status(200).json({ success: "Category created successfully" });
@@ -81,7 +83,7 @@ module.exports.deleteCategory = asyncHandler(async (req, res, next) => {
   }
   if (subcategory) {
     category.subcategories = category.subcategories.filter(
-      (sub) => sub.toString() !== subcategory.toString()
+      (sub) => sub.toString() !== subcategory
     );
     await category.save();
   } else {

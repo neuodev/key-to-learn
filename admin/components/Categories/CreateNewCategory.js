@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { createCategory } from "../../actions/categories";
+import { CREATE_CATEGORIES_RESET } from "../../actions/constants";
 import { TYPES } from "../../utils";
 import Alert from "../common/Alert";
 import Spinner from "../common/Spinner";
@@ -21,6 +22,9 @@ const CreateNewCategory = ({ subcategory, category, show, hide }) => {
     return () => {
       document.removeEventListener("mousedown", checkIfClickedOutside);
       setNewName("");
+      dispatch({
+        type: CREATE_CATEGORIES_RESET,
+      });
     };
   }, [ref, show]);
 
