@@ -14,9 +14,12 @@ module.exports.getCategories = asyncHandler(async (req, res, next) => {
 // @access  Private
 module.exports.updateCategory = asyncHandler(async (req, res, next) => {
   const id = req.params.id;
-  if (!req.body.name) {
+  const { newName, newSubcategory, oldSubcategoryName } = req.body;
+  if (newName && newSubcategory) {
     res.status(400);
-    throw new Error("New name is required");
+    throw new Error(
+      "At least on field should be provided to perofrm the update"
+    );
   }
   const category = await Category.findById(id);
   if (!category) {
@@ -24,7 +27,13 @@ module.exports.updateCategory = asyncHandler(async (req, res, next) => {
     throw new Error("Category not found");
   }
 
-  category.name = req.body.name;
+  category.name = newName.trim() || category.name;
+  if (newSubcategory && oldSubcategoryName) {
+    category.subcategories = category.subcategories.filter(
+      (sub) => sub.toString() !== oldSubcategoryName.toString()
+    );
+    category.subcategories.push(newSubcategory);
+  }
   await category.save();
   res.status(200).json({ success: "Category updated successfully" });
 });
@@ -33,10 +42,18 @@ module.exports.updateCategory = asyncHandler(async (req, res, next) => {
 // @route   POST /api/v1/categories
 // @access  Private
 module.exports.createCategegory = asyncHandler(async (req, res, next) => {
-  const { name } = req.body;
-  await Category.create({
-    name,
-  });
+  const { name, subcategory } = req.body;
+  const categories = await Category.find({ name });
+  const category = categories[0];
+  if (!category) {
+    await Category.create({
+      name,
+      subcategories: [subcategory],
+    });
+  } else {
+    category.categories.push(subcategory);
+  }
+  await category.save();
   res.status(200).json({ success: "Category created successfully" });
 });
 
@@ -45,11 +62,19 @@ module.exports.createCategegory = asyncHandler(async (req, res, next) => {
 // @access  Private
 module.exports.deleteCategory = asyncHandler(async (req, res, next) => {
   const id = req.params.id;
+  const { subcategory } = req.query;
   const category = await Category.findById(id);
   if (!category) {
     res.status(404);
     throw new Error("Category not found");
   }
-  await Category.findByIdAndDelete(id);
-  res.status(200).json({ success: "Category deleted successfully" });
+  if (subcategory) {
+    category.subcategories = category.subcategories.filter(
+      (sub) => sub.toString() !== subcategory.toString()
+    );
+    await category.save();
+  } else {
+    await Category.findByIdAndDelete(id);
+  }
+  res.status(200).json({ success: "Deleted successfully" });
 });
