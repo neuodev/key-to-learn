@@ -1,4 +1,5 @@
 import {
+  GET_CATEGORIES_ERROR,
   GET_CATEGORIES_REQUIES,
   GET_CATEGORIES_SUCCES,
 } from "../actions/constants";
@@ -20,12 +21,16 @@ export const categoriesReducer = (
     case GET_CATEGORIES_SUCCES:
       return {
         ...state,
-        loading: true,
+        loading: false,
+        error: null,
+        categories: payload,
       };
-    case GET_CATEGORIES_REQUIES:
+    case GET_CATEGORIES_ERROR:
       return {
         ...state,
-        loading: true,
+        loading: false,
+        error: payload,
+        categories: nll,
       };
 
     default:

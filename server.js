@@ -6,7 +6,7 @@ const postsRouter = require("./routes/postsRoutes");
 const morgan = require("morgan");
 const { notFound, errorHandler } = require("./middleware/errorMiddleware");
 const usersRouter = require("./routes/usersRoutes");
-const categoriesRouter = require("./routes/categoryiesRoutes");
+const categoriesRouter = require("./routes/categoriesRoutes");
 const commentsRouter = require("./routes/commentsRoutes");
 const messagesRouter = require("./routes/messagesRoutes");
 

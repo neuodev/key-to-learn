@@ -29,8 +29,11 @@ const Pagination = ({
     <div className="grid grid-cols-12 gap-5 px-6">
       <div className="col-span-4">
         <p className="font-thin">
-          Showing <span className="font-medium">{page * limit}</span> out of{" "}
-          <span className="font-medium">{count}</span>
+          Showing{" "}
+          <span className="font-medium">
+            {page * limit > count ? count : page * limit}
+          </span>{" "}
+          out of <span className="font-medium">{count}</span>
         </p>
       </div>
       <div className="col-span-4 flex items-center justify-center">
