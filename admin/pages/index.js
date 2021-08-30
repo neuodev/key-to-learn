@@ -17,11 +17,11 @@ const Admin = () => {
   // @todo redirect to login if it is not and admin
   const user = useSelector((state) => state.user);
   const router = useRouter();
-  // useEffect(() => {
-  //   if (!user || !user.userInfo || !user.userInfo.isAdmin) {
-  //     router.push("/sign-in");
-  //   }
-  // });
+  useEffect(() => {
+    if (!user || !user.userInfo || !user.userInfo.isAdmin) {
+      router.push("/sign-in");
+    }
+  });
   useEffect(() => {
     const fetchPosts = async () => {
       setLoading(true);
