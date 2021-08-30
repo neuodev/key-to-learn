@@ -17,8 +17,6 @@ const Editor = dynamic(
 
 // Will replace all of this and get it from the api
 const LEVELS = ["BASICS", "INTERMEDIATE", "ADVANCED"];
-const CATEGORIES = ["WEB", "ML", "DS", "DEVOPS"];
-const SUB_CATEGORY = ["SUB1", "SUB2", "SUB3"];
 
 const savedPost = "draft-post";
 const Create = () => {
@@ -26,8 +24,8 @@ const Create = () => {
   const [publish, setPublised] = useState(false);
   const [header, setHeader] = useState("");
   const [level, setLevel] = useState(LEVELS[0]);
-  const [category, setCategory] = useState(CATEGORIES[0]);
-  const [subcategory, setSubcategory] = useState(SUB_CATEGORY[0]);
+  const [category, setCategory] = useState(null);
+  const [subcategory, setSubcategory] = useState(null);
   const [tags, setTags] = useState("");
   const [editorData, setEditorData] = useState({});
   const [shouldLoadData, setShouldData] = useState(false);
@@ -149,6 +147,11 @@ const Create = () => {
       });
     };
   }, [createPostState]);
+
+  const getSubcateories = () => {
+    const currentCat = categories.categories.filter((c) => c.name === category);
+    return currentCat[0].subcategories;
+  };
   return (
     <div className=" max-h-screen w-full p-4  overflow-y-scroll">
       {createPostState.loading && (
@@ -190,7 +193,7 @@ const Create = () => {
           onChange={(e) => setTags(e.target.value)}
         />
       </div>
-      <div className="mb-6">
+      <div className="mb-9">
         {categories.loading ? (
           <div>
             <Spinner />
@@ -201,17 +204,41 @@ const Create = () => {
           </div>
         ) : (
           categories.categories && (
-            <div>
+            <div className="grid grid-cols-12 gap-4 mb-9">
+              <h1 className="col-span-12 text-lg font-medium ">Categories</h1>
               {categories.categories.map((cat) => (
-                <p
+                <button
+                  onClick={() => setCategory(cat.name)}
                   key={cat._id}
-                  className="py-2 px-3 bg-gray-100 text-gray-600"
+                  className={`py-2 px-3 bg-gray-100 col-span-2 rounded-full text-center cursor-pointer ${
+                    category === cat.name
+                      ? "bg-blue-100 text-blue-400"
+                      : "bg-gray-100 text-gray-600"
+                  } `}
                 >
                   {cat.name}
-                </p>
+                </button>
               ))}
             </div>
           )
+        )}
+        {category && (
+          <div className="grid grid-cols-12 gap-4 mt-4 mb-9">
+            <h1 className="col-span-12 text-lg font-medium ">SubCategories</h1>
+            {getSubcateories().map((sub) => (
+              <button
+                onClick={() => setSubcategory(sub)}
+                key={sub}
+                className={`py-2 px-3 ${
+                  subcategory === sub
+                    ? "bg-blue-100 text-blue-400"
+                    : "bg-gray-100 text-gray-600"
+                } col-span-2 rounded-full text-center cursor-pointer `}
+              >
+                {sub}
+              </button>
+            ))}
+          </div>
         )}
       </div>
 
