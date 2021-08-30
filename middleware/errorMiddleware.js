@@ -8,6 +8,9 @@ const errorHandler = (err, req, res, next) => {
   const statusCode = res.statusCode === 200 ? 500 : res.statusCode;
   res.status(statusCode);
   let message = err.message;
+  if (process.env.NODE_ENV === "development") {
+    console.log(err);
+  }
   if (err.kind === "ObjectId") {
     message = "Not Found";
   }
@@ -17,6 +20,7 @@ const errorHandler = (err, req, res, next) => {
 
     message = `Dubplication Key Error. ${key} with value ${keyValue[key]} Alread exist`;
   }
+
   res.json({
     message,
     stack: process.env.NODE_ENV === "production" ? null : err.stack,

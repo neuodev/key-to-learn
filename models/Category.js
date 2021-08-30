@@ -9,7 +9,6 @@ const CategorySchema = new mongoose.Schema({
   subcategories: [
     {
       type: String,
-      required: "Can't create an empyt subcategory",
       unique: true,
     },
   ],
