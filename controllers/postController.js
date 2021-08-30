@@ -6,7 +6,7 @@ const User = require("../models/User");
 // @route   POST /api/v1/post
 // @access  Private
 module.exports.createPost = asyncHandler(async (req, res, next) => {
-  const { body, tags, pubished, thumbnail, header, categories } = req.body;
+  const { body, published, thumbnail, header, domain } = req.body;
   if (!body || !body.blocks) {
     res.status(400);
     throw new Error("Post can't be empty");
@@ -19,11 +19,10 @@ module.exports.createPost = asyncHandler(async (req, res, next) => {
   const slug = header.toLowerCase().trim().replace(/ /g, "-");
   await Post.create({
     body,
-    tags,
-    pubished,
+    published,
     thumbnail,
     header,
-    categories,
+    domain,
     user: req.user,
     slug,
   });
