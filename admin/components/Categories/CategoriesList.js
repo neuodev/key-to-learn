@@ -41,16 +41,16 @@ const CategoriesList = ({ categories }) => {
               <FontAwesomeIcon icon={faPen} />
             </div>
           </div>
-          <div className="flex items-center justify-start mt-4">
+          <div className="grid grid-cols-12 gap-5 mt-4">
             {cat.subcategories.map((sub) => (
-              <p className="mr-4 p-4 flex items-center justify-between bg-blue-100 border border-blue-500 rounded-full text-blue-600 font-medium cursor-pointer hover:bg-blue-200 transition-colors duration-150">
+              <p className="mr-4 p-4 col-span-3 flex items-center justify-between bg-blue-100 border border-blue-500 rounded-full text-blue-600 font-medium cursor-pointer hover:bg-blue-200 transition-colors duration-150">
                 <span
                   onClick={() => updateSubCategory(cat.name, cat._id, sub)}
                   className="mr-2 inline-block truncate"
                 >
                   {sub}
                 </span>
-                <button className="bg-blue-300  text-xs p-1 px-2 rounded-full hover:bg-blue-400">
+                <button className="bg-blue-300 flex items-center justify-center  text-xs p-1 px-2 rounded-full hover:bg-blue-400">
                   <FontAwesomeIcon icon={faTimes} />
                 </button>
               </p>
@@ -63,7 +63,7 @@ const CategoriesList = ({ categories }) => {
                 setCategory(cat.name);
               }}
             >
-              <p className="mr-4 p-4 px-8 bg-blue-100 border border-blue-500 rounded-full text-blue-600 font-medium cursor-pointer hover:bg-blue-200 transition-colors duration-150">
+              <p className="mr-4 p-4 px-8 flex items-center justify-center bg-blue-100 border border-blue-500 rounded-full text-blue-600 font-medium cursor-pointer hover:bg-blue-200 transition-colors duration-150">
                 <FontAwesomeIcon icon={faPlus} />
               </p>
             </button>

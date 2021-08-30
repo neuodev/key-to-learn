@@ -9,7 +9,7 @@
     "import": "node seeder.js",
     "distroy": "node seeder.js -d",
     "start:client": "npm run dev --prefix client",
-    "start:admin": "npm run dev --prefix admin"
+    "start:admin": "npm run dev:server --prefix admin"
   },
   "author": "Ahmed Ibrahim",
   "license": "MIT",
