@@ -48,6 +48,7 @@ const Admin = () => {
         type: "",
         message: "",
       });
+      console.log(data);
       setAllPosts(data.data);
       setCount(data.count);
     };
@@ -61,7 +62,7 @@ const Admin = () => {
   };
 
   const prevPage = () => {
-    if (page < 1) return;
+    if (page === 1) return;
     setPage(page - 1);
   };
 
@@ -79,22 +80,14 @@ const Admin = () => {
         </Link>
       </div>
       {loading ? (
-        <div className="flex items-center justify-center w-full h-full">
+        <div className="flex items-center justify-center w-full  h-96">
           <Spinner />
         </div>
       ) : alert.message ? (
         <Alert tyep={TYPES.ERROR} message={alert.message} />
       ) : (
         <div>
-          <PostsList
-            posts={allPosts}
-            count={count}
-            nextPage={nextPage}
-            prevPage={prevPage}
-            updateLimit={updateLimit}
-            limit={limit}
-            page={page}
-          />
+          <PostsList posts={allPosts} />
         </div>
       )}
       <Pagination
