@@ -1,13 +1,12 @@
 import {
   CREATE_CATEGORIES_ERROR,
-  CREATE_CATEGORIES_REQUIES,
+  CREATE_CATEGORIES_REQUEST,
   CREATE_CATEGORIES_SUCCESS,
   GET_CATEGORIES_ERROR,
-  GET_CATEGORIES_REQUIES,
-  GET_CATEGORIES_SUCCES,
+  GET_CATEGORIES_REQUEST,
   GET_CATEGORIES_SUCCESS,
   UPDATE_CATEGORIES_ERROR,
-  UPDATE_CATEGORIES_REQUIES,
+  UPDATE_CATEGORIES_REQUEST,
   UPDATE_CATEGORIES_RESET,
   UPDATE_CATEGORIES_SUCCESS,
 } from "../actions/constants";
@@ -21,7 +20,7 @@ export const categoriesReducer = (
   { type, payload }
 ) => {
   switch (type) {
-    case GET_CATEGORIES_REQUIES:
+    case GET_CATEGORIES_REQUEST:
       return {
         ...state,
         loading: true,
@@ -55,7 +54,7 @@ export const createCategory = (
   { type, payload }
 ) => {
   switch (type) {
-    case CREATE_CATEGORIES_REQUIES:
+    case CREATE_CATEGORIES_REQUEST:
       return {
         ...state,
         loading: true,
@@ -89,7 +88,7 @@ export const updateCategory = (
   { type, payload }
 ) => {
   switch (type) {
-    case UPDATE_CATEGORIES_REQUIES:
+    case UPDATE_CATEGORIES_REQUEST:
       return {
         ...state,
         loading: true,
