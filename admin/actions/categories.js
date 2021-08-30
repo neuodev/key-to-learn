@@ -46,10 +46,14 @@ export const createCategory = (data) => async (dispatch, state) => {
     },
   };
   try {
-    const { data } = await axios.post("/api/v1/categories", data, conifg);
+    const { data: message } = await axios.post(
+      "/api/v1/categories",
+      data,
+      conifg
+    );
     dispatch({
       type: CREATE_CATEGORIES_SUCCESS,
-      payload: data.success,
+      payload: message.success,
     });
   } catch (error) {
     dispatch({

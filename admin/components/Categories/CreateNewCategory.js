@@ -50,7 +50,7 @@ const CreateNewCategory = ({ subcategory, category, show, hide }) => {
       }`}
     >
       <div className="flex flex-col items-center">
-        <h1 className="mb-4 text-lg text-gray-600">
+        <h1 className="mb-4 text-lg text-blue-600 bg-blue-100  px-3 py-2 rounded-full">
           Create New {category && !subcategory ? "Category" : "Subcategory"}
         </h1>
         {createCategoryState.loading ? (
@@ -63,7 +63,7 @@ const CreateNewCategory = ({ subcategory, category, show, hide }) => {
           </div>
         ) : (
           createCategoryState.success && (
-            <div>
+            <div className="w-full mb-4">
               <Alert
                 message={createCategoryState.success}
                 type={TYPES.SUCCESS}

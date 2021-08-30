@@ -54,9 +54,9 @@ module.exports.createCategegory = asyncHandler(async (req, res, next) => {
   if (!category) {
     await Category.create({
       name: name.trim().replace(/ /g, "-"),
-      subcategories: subcategory ? [subcategory.trim().replace(/ /g, "-")] : [],
+      subcategories: [],
     });
-  } else {
+  } else if (subcategory) {
     const catSet = new Set(category.subcategories);
     if (catSet.has(subcategory)) {
       res.status(400);

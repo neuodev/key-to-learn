@@ -39,7 +39,7 @@ const UpdateCategory = ({ subcategory, category, show, hide, id }) => {
       );
     } else if (subcategory) {
       dispatch(
-        createCategory(id, {
+        updateCategory(id, {
           oldSubcategoryName: subcategory,
           newSubcategory: newName,
         })
@@ -47,16 +47,17 @@ const UpdateCategory = ({ subcategory, category, show, hide, id }) => {
     }
     setNewName("");
   };
+
   return (
     <div
       ref={ref}
-      className={` top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2  w-1/2  p-4 rounded-lg shadow-lg flex items-center justify-center bg-white ${
+      className={` top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2  w-10/12 md:w-8/12 lg:w-1/2  p-4 rounded-lg shadow-lg flex items-center justify-center bg-white ${
         show ? "absolute" : "hidden"
       }`}
     >
       <div className="flex flex-col items-center">
         <h1 className="mb-4 bg-blue-100 px-3 py-2 rounded-full text-blue-900 ">
-          Create New {subcategory ? "Subcategory" : "Category"}
+          Update {subcategory ? "Subcategory" : "Category"}
         </h1>
         {updateCategoryState.loading ? (
           <div>
@@ -79,12 +80,11 @@ const UpdateCategory = ({ subcategory, category, show, hide, id }) => {
         <div className="text-xl mb-4">
           Change{" "}
           <span className="font-medium">
-            {category ? "Category" : "Subcatgory"}
+            {subcategory ? "Subcategory" : "Catgory"}
           </span>{" "}
           From{" "}
           <span className="font-medium">
-            {category}
-            {subcategory}
+            {subcategory ? subcategory : category}
           </span>
         </div>
 
@@ -96,7 +96,7 @@ const UpdateCategory = ({ subcategory, category, show, hide, id }) => {
           onChange={(e) => setNewName(e.target.value)}
           className="mb-3 bg-gray-100 w-full rounded-lg p-4 focus:outline-none"
           placeholder={`Enter New ${
-            category ? "Category" : "Subcategory"
+            subcategory ? "Subcategory" : "Catgory"
           } Name`}
         />
 
