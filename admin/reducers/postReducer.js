@@ -90,3 +90,44 @@ export const deletePost = (
       return state;
   }
 };
+
+export const updatePost = (
+  state = {
+    loading: false,
+    error: null,
+    success: null,
+  },
+  { type, payload }
+) => {
+  switch (type) {
+    case POST_DELETE_REQUEST:
+      return {
+        ...state,
+        loading: true,
+        error: null,
+        success: null,
+      };
+    case POST_DELETE_ERROR:
+      return {
+        ...state,
+        loading: false,
+        error: payload,
+      };
+    case POST_DELETE_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        error: null,
+        success: payload,
+      };
+    case POST_DELETE_RESET:
+      return {
+        ...state,
+        loading: false,
+        error: null,
+        success: null,
+      };
+    default:
+      return state;
+  }
+};

@@ -9,7 +9,8 @@ import Alert from "../../components/common/Alert";
 import { TYPES } from "../../utils";
 import Spinner from "../../components/common/Spinner";
 import { getCategories } from "../../actions/categories";
-
+import { useRouter } from "next/dist/client/router";
+import axios from "axios";
 const Editor = dynamic(
   () => import("../../Editor/editor").then((mod) => mod.EditorContainer),
   { ssr: false }
@@ -17,21 +18,33 @@ const Editor = dynamic(
 
 // Will replace all of this and get it from the api
 const LEVELS = ["BASICS", "INTERMEDIATE", "ADVANCED"];
-
 const savedPost = "draft-post";
-const Create = () => {
+const DEFAULT_ALERT = {
+  type: "",
+  message: "",
+};
+
+const Update = () => {
+  const [loading, setLoading] = useState(false);
   const [editor, setEditor] = useState(null);
+  const [publish, setPublised] = useState(true);
   const [header, setHeader] = useState("");
   const [level, setLevel] = useState(LEVELS[0]);
   const [category, setCategory] = useState(null);
   const [subcategory, setSubcategory] = useState(null);
   const [tags, setTags] = useState("");
   const [editorData, setEditorData] = useState({});
+  const [shouldLoadData, setShouldData] = useState(false);
   const [alert, setAlert] = useState({
     type: null,
     message: null,
   });
+  const router = useRouter();
+  // save handler
+  const onSave = useSaveCallback(editor);
 
+  // clear data callback
+  const clearData = useClearDataCallback(editor);
   // Store a screenshot of the current state in the localstorate under the name of the draft-post
   const saveToLS = async () => {
     const out = await editor.save();
@@ -40,6 +53,7 @@ const Create = () => {
       category,
       tags,
       subcategory,
+      publish,
       level,
       data: out,
     });
@@ -66,6 +80,7 @@ const Create = () => {
     setCategory(data.category);
     setTags(data.tags);
     setSubcategory(data.subcategory);
+    setPublised(data.publish);
     setLevel(data.level);
     editor.isReady.then(() => {
       // fixing an annoying warning in Chrome `addRange(): The given range isn't in document.`
@@ -149,12 +164,93 @@ const Create = () => {
     };
   }, [createPostState]);
 
+  const user = useSelector((state) => state.user);
+  useEffect(() => {
+    setAlert(DEFAULT_ALERT);
+    if (!router.query.title) {
+      router.push("/admin");
+      return;
+    }
+
+    if (!user.userInfo || !user.userInfo.isAdmin) {
+      router.push("/");
+      return;
+    }
+    const fetchPost = async () => {
+      setLoading(true);
+      try {
+        const { data } = await axios.get("/api/v1/posts", {
+          params: {
+            slug: router.query.title,
+          },
+          headers: {
+            "content-type": "application/json",
+            Authorization: `Bearer ${user.userInfo.token}`,
+          },
+        });
+        if (data.data.length === 0) {
+          setAlert({
+            type: TYPES.ERROR,
+            message: "Post Not Found",
+          });
+          return;
+        }
+
+        const fetchedPost = data.data[0];
+        fetchedPost.body.blocks = fetchedPost.body.blocks.map((b) => ({
+          ...b,
+          data: JSON.parse(b.data),
+        }));
+        console.log(fetchedPost);
+        const { body, header, domain } = fetchedPost;
+        setEditorData(body);
+        setHeader(header);
+        setTags(
+          domain.tags.length === 0
+            ? "NO TAGS"
+            : domain.tags.length === 1
+            ? domain.tags[0]
+            : domain.tags.concat(",")
+        );
+        setLevel(domain.level);
+        setCategory(domain.categories[0]);
+        // setSubcategory(subcategory[0]);
+        setLoading(false);
+      } catch (error) {
+        setLoading(false);
+        setAlert({
+          type: TYPES.ERROR,
+          message:
+            error.response && error.response.data.message
+              ? error.response.data.message
+              : error.message,
+        });
+      }
+    };
+    if (!header) {
+      fetchPost();
+    }
+    if (editor && editorData && shouldLoadData) {
+      // Map response from json to normal javascript obj
+      editor.isReady.then(() => {
+        setTimeout(() => {
+          setShouldData(false);
+          editor.render(editorData);
+        }, 1000);
+      });
+    }
+    return () => {
+      setAlert(DEFAULT_ALERT);
+      setLoading(false);
+    };
+  }, [router, editor, editorData]);
+
   const getSubcateories = () => {
     const currentCat = categories.categories.filter((c) => c.name === category);
     return currentCat[0].subcategories;
   };
   return (
-    <div className=" max-h-screen w-full p-4 h-screen overflow-y-scroll">
+    <div className=" max-h-screen w-full p-4 h-screen  overflow-y-scroll ">
       {createPostState.loading && (
         <div className="mb-3 flex items-center justify-center">
           <Spinner />
@@ -166,7 +262,7 @@ const Create = () => {
         </div>
       )}
       <div>
-        <h1 className="my-4">Create Post</h1>
+        <h1 className="my-4">Update Post</h1>
       </div>
       <div className="flex items-center justify-end mb-4">
         {OPTIONS_LIST.map((option) => (
@@ -196,6 +292,12 @@ const Create = () => {
           value={tags}
           onChange={(e) => setTags(e.target.value)}
         />
+      </div>
+      <div>
+        <h2 className="text-lg flex mb-5">
+          <p className="text-gray-500 mr-1 font-thin text-lg">Level:</p>{" "}
+          <span className="text-lg  font-medium">{level}</span>
+        </h2>
       </div>
       <div className="mb-9">
         {categories.loading ? (
@@ -237,7 +339,7 @@ const Create = () => {
                   subcategory === sub
                     ? "bg-blue-100 text-blue-400"
                     : "bg-gray-100 text-gray-600"
-                } col-span-2 rounded-full text-center cursor-pointer `}
+                } col-span-4 rounded-full truncate text-center cursor-pointer `}
               >
                 {sub}
               </button>
@@ -256,4 +358,4 @@ const Create = () => {
   );
 };
 
-export default Create;
+export default Update;

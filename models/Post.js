@@ -67,7 +67,6 @@ const PostSchema = new mongoose.Schema(
         {
           type: String,
           required: [true, "Can't add empty category"],
-          enum: ["WEB", "ML", "DS", "DEVOPS"],
         },
       ],
       subcategory: [

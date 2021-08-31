@@ -40,8 +40,9 @@ module.exports.updatePost = asyncHandler(async (req, res, next) => {
     res.status(404);
     throw new Error("Post Not Found");
   }
-  const { header, body, addCategories, removeCategories } = req.body;
-  if (!header && !body && !addCategories && !removeCategories) {
+  const { header, body, tags, published, level, categories, subcategory } =
+    req.body;
+  if (!header && !body) {
     res.status(400);
     throw new Error("At least one field is requried to perform the update");
   }
@@ -54,30 +55,13 @@ module.exports.updatePost = asyncHandler(async (req, res, next) => {
   }
   post.header = header || post.header;
   post.body = body || post.body;
-
-  if (addCategories) {
-    if (!(addCategories instanceof Array)) {
-      res.status(400);
-      throw new Error("Expected AddCategories to be an array");
-    }
-    const categoriesSet = new Set(post.categories);
-    for (const cat of addCategories) {
-      if (!categoriesSet.has(cat)) {
-        post.categories.push(cat);
-      }
-    }
+  post.domain.categories = categories || post.domain.categories;
+  post.domain.level = level || post.domain.level;
+  post.domain.tags = tags || post.domain.tags;
+  if (typeof published === "boolean") {
+    post.published = published;
   }
 
-  if (removeCategories) {
-    if (!(removeCategories instanceof Array)) {
-      res.status(400);
-      throw new Error("Expected removeCategories to be an array");
-    }
-    const removeCategoriesSet = new Set(removeCategories);
-    post.categories = post.categories.filter(
-      (c) => !removeCategoriesSet.has(c)
-    );
-  }
   await post.save();
   res.status(200).json({ success: "Post Updated Successfully" });
 });
