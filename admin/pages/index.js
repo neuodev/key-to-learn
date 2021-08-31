@@ -76,7 +76,7 @@ const Admin = () => {
       <div className="flex items-center justify-between px-5 ">
         <h1 className="text-4xl">Posts</h1>
         <Link href="/posts/create">
-          <p className=" w-40 text-lg cursor-pointer py-3 flex items-center justify-center bg-green-100 hover:bg-green-200 rounded-lg font-medium uppercase tracking-wider text-green-700">
+          <p className=" w-40 text-lg cursor-pointer py-3 flex items-center justify-center bg-blue-100 hover:bg-blue-200 rounded-lg font-medium uppercase tracking-wider text-blue-700">
             New Post
           </p>
         </Link>
