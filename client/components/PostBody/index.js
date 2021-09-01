@@ -1,5 +1,5 @@
 import React from "react";
-import Code from "./Code";
+import Code from "./Code/Code";
 import Header from "./Header";
 import List from "./List";
 import Text from "./Text";
