@@ -58,6 +58,8 @@ module.exports.updatePost = asyncHandler(async (req, res, next) => {
   post.domain.categories = categories || post.domain.categories;
   post.domain.level = level || post.domain.level;
   post.domain.tags = tags || post.domain.tags;
+  post.domain.subcategory = subcategory || post.domain.subcategory;
+
   if (typeof published === "boolean") {
     post.published = published;
   }

@@ -77,10 +77,12 @@ export const updatePost = (id, postData) => async (dispatch, state) => {
   const config = {
     headers: {
       Authorization: `Bearer ${user.userInfo.token}`,
+      "content-type": "application/json",
     },
   };
   try {
     const { data } = await axios.put(`/api/v1/posts/${id}`, postData, config);
+    console.log("update", data);
     dispatch({
       type: POST_UPDATE_SUCCESS,
       payload: data.success,

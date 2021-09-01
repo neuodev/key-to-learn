@@ -4,7 +4,7 @@ import { useSaveCallback, useClearDataCallback } from "../../Editor/hooks";
 import { options } from "../../Editor/options";
 // import OptionsMenu from "../../components/Posts/OptionsMenu";
 import { useSelector, useDispatch } from "react-redux";
-import { createPost } from "../../actions/postActions";
+import { createPost, updatePost } from "../../actions/postActions";
 import Alert from "../../components/common/Alert";
 import { TYPES } from "../../utils";
 import Spinner from "../../components/common/Spinner";
@@ -26,6 +26,7 @@ const DEFAULT_ALERT = {
 
 const Update = () => {
   const [loading, setLoading] = useState(false);
+  const [postId, setPostId] = useState(null);
   const [editor, setEditor] = useState(null);
   const [publish, setPublised] = useState(true);
   const [header, setHeader] = useState("");
@@ -82,6 +83,7 @@ const Update = () => {
     setSubcategory(data.subcategory);
     setPublised(data.publish);
     setLevel(data.level);
+
     editor.isReady.then(() => {
       // fixing an annoying warning in Chrome `addRange(): The given range isn't in document.`
       setTimeout(() => {
@@ -91,7 +93,7 @@ const Update = () => {
   };
 
   const dispatch = useDispatch();
-  const createPostState = useSelector((state) => state.createPost);
+  const updatePostState = useSelector((state) => state.updatePost);
   const categories = useSelector((state) => state.categories);
 
   useEffect(() => {
@@ -106,19 +108,18 @@ const Update = () => {
       });
     };
   }, []);
-  const publishPost = async (shouldPublish) => {
+  const updatePostHandler = async (shouldPublish) => {
     const out = await editor.save();
     dispatch(
-      createPost({
+      updatePost(postId, {
         header,
-        domain: {
-          level,
-          categories: [category],
-          subcategory: [subcategory],
-          tags: tags.split(","),
-        },
         published: shouldPublish,
         body: out,
+        tags,
+        published: shouldPublish,
+        level,
+        categories: [category],
+        subcategory: [subcategory],
       })
     );
   };
@@ -134,35 +135,35 @@ const Update = () => {
     },
     {
       text: "Draft",
-      onClick: () => publishPost(false),
+      onClick: () => updatePostHandler(false),
     },
     {
       text: "Publish",
-      onClick: () => publishPost(true),
+      onClick: () => updatePostHandler(true),
     },
   ];
 
-  useEffect(() => {
-    if (createPostState.error) {
-      setAlert({
-        type: TYPES.ERROR,
-        message: createPostState.error,
-      });
-    }
-    if (createPostState.success) {
-      setAlert({
-        type: TYPES.SUCCESS,
-        message: createPostState.success,
-      });
-    }
+  //   useEffect(() => {
+  //     if (updatePostState.error) {
+  //       setAlert({
+  //         type: TYPES.ERROR,
+  //         message: updatePostState.error,
+  //       });
+  //     }
+  //     if (updatePostState.success) {
+  //       setAlert({
+  //         type: TYPES.SUCCESS,
+  //         message: updatePostState.success,
+  //       });
+  //     }
 
-    return () => {
-      setAlert({
-        type: "",
-        message: "",
-      });
-    };
-  }, [createPostState]);
+  //     return () => {
+  //       setAlert({
+  //         type: "",
+  //         message: "",
+  //       });
+  //     };
+  //   }, [updatePostState]);
 
   const user = useSelector((state) => state.user);
   useEffect(() => {
@@ -210,11 +211,14 @@ const Update = () => {
             ? "NO TAGS"
             : domain.tags.length === 1
             ? domain.tags[0]
-            : domain.tags.concat(",")
+            : domain.tags.toString()
         );
         setLevel(domain.level);
         setCategory(domain.categories[0]);
-        // setSubcategory(subcategory[0]);
+        setPostId(fetchedPost._id);
+        if (domain.categories[0]) {
+          setSubcategory(domain.subcategory[0]);
+        }
         setLoading(false);
       } catch (error) {
         setLoading(false);
@@ -230,19 +234,19 @@ const Update = () => {
     if (!header) {
       fetchPost();
     }
-    if (editor && editorData && shouldLoadData) {
+    if (editor && editorData) {
       // Map response from json to normal javascript obj
-      editor.isReady.then(() => {
-        setTimeout(() => {
-          setShouldData(false);
-          editor.render(editorData);
-        }, 1000);
-      });
+      try {
+        editor.isReady.then(() => {
+          setTimeout(() => {
+            setShouldData(false);
+            editor.render(editorData);
+          }, 1000);
+        });
+      } catch (error) {
+        console.log(error.message);
+      }
     }
-    return () => {
-      setAlert(DEFAULT_ALERT);
-      setLoading(false);
-    };
   }, [router, editor, editorData]);
 
   const getSubcateories = () => {
@@ -251,14 +255,19 @@ const Update = () => {
   };
   return (
     <div className=" max-h-screen w-full p-4 h-screen  overflow-y-scroll ">
-      {createPostState.loading && (
+      {updatePostState.loading && (
         <div className="mb-3 flex items-center justify-center">
           <Spinner />
         </div>
       )}
-      {alert.message && (
+      {updatePostState.error && (
         <div className="mb-3">
-          <Alert type={alert.type} message={alert.message} />
+          <Alert type={TYPES.ERROR} message={updatePostState.error} />
+        </div>
+      )}
+      {updatePostState.success && (
+        <div className="mb-3">
+          <Alert type={TYPES.SUCCESS} message={updatePostState.success} />
         </div>
       )}
       <div>

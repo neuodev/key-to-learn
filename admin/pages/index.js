@@ -1,6 +1,6 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { useRouter } from "next/dist/client/router";
 import PostsList from "../components/posts/PostsList";
 import Spinner from "../components/common/Spinner";
@@ -8,6 +8,7 @@ import Alert from "../components/common/Alert";
 import { TYPES } from "../utils";
 import Pagination from "../components/posts/Pagination";
 import Link from "next/link";
+import { POST_DELETE_RESET } from "../actions/constants";
 
 const DEFAULT_ALERT = {
   type: "",
@@ -24,6 +25,7 @@ const Admin = () => {
   //redirect to login if it is not and admin
   const user = useSelector((state) => state.user);
   const deletePost = useSelector((state) => state.deletePost);
+  const dispatch = useDispatch();
   const router = useRouter();
   useEffect(() => {
     if (!user || !user.userInfo || !user.userInfo.isAdmin) {
@@ -56,6 +58,12 @@ const Admin = () => {
     };
 
     fetchPosts();
+
+    return () => {
+      dispatch({
+        type: POST_DELETE_RESET,
+      });
+    };
   }, [page, limit, deletePost.success]);
 
   const nextPage = () => {

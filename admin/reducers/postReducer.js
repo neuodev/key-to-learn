@@ -7,6 +7,10 @@ import {
   POST_DELETE_ERROR,
   POST_DELETE_SUCCESS,
   POST_DELETE_RESET,
+  POST_UPDATE_REQUEST,
+  POST_UPDATE_ERROR,
+  POST_UPDATE_SUCCESS,
+  POST_UPDATE_RESET,
 } from "../actions/constants";
 
 export const createPostReducer = (
@@ -100,27 +104,27 @@ export const updatePost = (
   { type, payload }
 ) => {
   switch (type) {
-    case POST_DELETE_REQUEST:
+    case POST_UPDATE_REQUEST:
       return {
         ...state,
         loading: true,
         error: null,
         success: null,
       };
-    case POST_DELETE_ERROR:
+    case POST_UPDATE_ERROR:
       return {
         ...state,
         loading: false,
         error: payload,
       };
-    case POST_DELETE_SUCCESS:
+    case POST_UPDATE_SUCCESS:
       return {
         ...state,
         loading: false,
         error: null,
         success: payload,
       };
-    case POST_DELETE_RESET:
+    case POST_UPDATE_RESET:
       return {
         ...state,
         loading: false,
