@@ -5,12 +5,17 @@ import { faClock, faComments, faTags } from "@fortawesome/free-solid-svg-icons";
 import dayjs from "dayjs";
 import Tags from "../../components/common/Tags";
 import PostBody from "../../components/PostBody";
-const Post = ({ post }) => {
-  console.log(post);
-  const publishedDate = dayjs(post.createdAt).format("MMM DD,YYYY");
+import Head from "next/head";
 
+const Post = ({ post }) => {
+  const publishedDate = dayjs(post.createdAt).format("MMM DD,YYYY");
   return (
     <div className="p-5 min-h-screen max-w-screen-md">
+      <Head>
+        <title>{post.header}</title>
+        <meta name="viewport" content="initial-scale=1.0, width=device-width" />
+        <meta name="description" content={post.domain.tags.toString()} />
+      </Head>
       <div className="h-100">
         <img
           className="w-full h-full object-cover "
@@ -18,8 +23,7 @@ const Post = ({ post }) => {
           alt={post.header}
         />
       </div>
-
-      <h1 className="text-5xl font-medium my-6 post-heading post-heading-color">
+      <h1 className="text-3xl md:text-5xl font-medium my-6 post-heading post-heading-color">
         {post.header}
       </h1>
       <div className="grid items-center  grid-cols-12 gap-3 ">
@@ -41,7 +45,6 @@ const Post = ({ post }) => {
           <Tags tags={post.domain} />
         </div>
       </div>
-
       <PostBody body={post.body} />
     </div>
   );
