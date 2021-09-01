@@ -1,9 +1,9 @@
 import React from "react";
 
-const Header = ({ text, as }) => {
+const Header = ({ data }) => {
   return (
     <div>
-      <h1>{text}</h1>
+      <h1 dangerouslySetInnerHTML={{ __html: data.text }} />
     </div>
   );
 };

@@ -5,13 +5,14 @@ import Text from "./Text";
 
 const PostBody = ({ body }) => {
   return (
-    <div>
-      {body.blocks.map((block) => {
+    <div className="py-8 text-gray-800">
+      {body.blocks.slice(1).map((block) => {
+        console.log(block);
         if (block.type === "header") {
-          return <Header text={JSON.parse(block.data).text} as="h1" />;
+          return <Header key={block.id} data={JSON.parse(block.data)} />;
         }
         if (block.type === "paragraph") {
-          return <Text text={JSON.parse(block.data).text} />;
+          return <Text data={JSON.parse(block.data)} />;
         }
         if (block.type === "list") {
           return <List data={JSON.parse(block.data)} />;
