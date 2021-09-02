@@ -5,4 +5,7 @@ module.exports = {
       { source: "/backend/:path*", destination: "https://example.com/:path*" },
     ];
   },
+  images: {
+    domains: [],
+  },
 };
