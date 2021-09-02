@@ -9,7 +9,7 @@ const advancedResults = (model, populate) => async (req, res, next) => {
   const reqQuery = { ...req.query };
 
   // Fields to exclude
-  const removeFields = ["select", "sort", "page", "limit"];
+  const removeFields = ["select", "sort", "page", "limit", "search"];
 
   // Loop over removeFields and delete them from reqQuery
   removeFields.forEach((param) => delete reqQuery[param]);
@@ -51,6 +51,22 @@ const advancedResults = (model, populate) => async (req, res, next) => {
   if (model.collection.collectionName === "posts" && !admin) {
     queryObj.published = true;
   }
+  if (req.query.search) {
+    const search = JSON.parse(req.query.search);
+    const regExp = new RegExp(search.text, "gi");
+    const searchArray = [];
+    for (const field of search.fields) {
+      if (model.collection.collectionName === "posts" && field === "body") {
+        searchArray.push({
+          "body.blocks.data": regExp,
+        });
+      } else {
+        searchArray.push({ [field]: { $regex: regExp } });
+      }
+    }
+    queryObj["$or"] = searchArray;
+  }
+  console.log(queryObj);
 
   // Finding resource
   query = model.find(queryObj);

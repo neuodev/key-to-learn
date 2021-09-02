@@ -1,8 +1,10 @@
 export const constractSearchParams = (text) => {
-  const params = {};
+  const params = {
+    select: "header,body.blocks",
+  };
 
   if (text) {
-    params.header = text;
+    params.search = { text, fields: ["header", "body"] };
   }
   return params;
 };
