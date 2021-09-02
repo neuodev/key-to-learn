@@ -38,13 +38,10 @@ const advancedResults = (model, populate) => async (req, res, next) => {
 
       admin = await User.findById(decoded.id).select("-password");
       if (!admin.isAdmin) {
-        res.status(401);
-        throw new Error("Not authorized, token failed");
+        admin = null;
       }
     } catch (error) {
-      console.error(error);
-      res.status(401);
-      throw new Error("Not authorized, token failed");
+      admin = null;
     }
   }
 

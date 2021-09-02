@@ -48,7 +48,7 @@ const PostSchema = new mongoose.Schema(
     thumbnail: {
       type: String,
       required: true,
-      default: "https://via.placeholder.com/150",
+      default: "https://picsum.photos/1080",
     },
     likes: [
       {

@@ -1,9 +1,12 @@
 import React from "react";
-
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faCircleNotch } from "@fortawesome/free-solid-svg-icons";
 const Spinner = () => {
   return (
     <div className="w-full flex items-center justify-center">
-      <span className="w-5 h-5 m-3 inline-block bg-blue-500 rounded-full animate-ping"></span>
+      <span className="m-3 inline-block text-gray-600 text-2xl animate-spin ">
+        <FontAwesomeIcon icon={faCircleNotch} />
+      </span>
     </div>
   );
 };
