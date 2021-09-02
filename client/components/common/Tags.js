@@ -13,7 +13,7 @@ const Tags = ({ tags }) => {
     <div className="flex items-center">
       <div className={className + "rounded-full"}>
         {/search/g.test(router.asPath) ? (
-          <Link href="search">
+          <Link href="/search">
             <FontAwesomeIcon icon={faTag} />
           </Link>
         ) : (

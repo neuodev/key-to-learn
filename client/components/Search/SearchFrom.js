@@ -4,7 +4,7 @@ import { faSearch } from "@fortawesome/free-solid-svg-icons";
 import { useSelector, useDispatch } from "react-redux";
 import Filter from "./Filter";
 
-const SearchFrom = ({ count, updateSearchText }) => {
+const SearchFrom = ({ postsCount, updateSearchText }) => {
   const [text, setText] = useState("");
   const onSubmit = (e) => {
     e.preventDefault();
@@ -25,7 +25,7 @@ const SearchFrom = ({ count, updateSearchText }) => {
           <p>Search</p>
         </button>
       </div>
-      <Filter postsCounts={count} />
+      <Filter postsCount={postsCount} />
     </form>
   );
 };

@@ -31,32 +31,54 @@ const Filter = ({ postsCount }) => {
     return () => {
       document.removeEventListener("mousedown", checkIfClickedOutside);
     };
-  }, [ref, show]);
+  }, [show]);
   const filterHandler = () => {
     let url;
     if (category && subCat) {
       url = `/search?domain.categories=${category}&domain.subcategory=${subCat}`;
     } else if (category) {
       url = `/search?domain.categories=${category}`;
-    } else {
+    } else if (subCat) {
       url = `/search?domain.subcategory=${subCat}`;
+    } else {
+      url = `/search`;
     }
 
     router.push(url);
     setShow(false);
   };
+
+  const clearFilter = () => {
+    router.push("/search");
+  };
   return (
     <div className={`relative z-40`}>
-      <div className="flex items-center justify-between py-4">
-        <p className="font-thin text-lg">
-          Posts (<span className="font-medium">{postsCount}</span>)
-        </p>
-        <button
-          onClick={() => setShow(true)}
-          className="px-3 py-2 hover:bg-gray-200 bg-gray-100 rounded-md "
-        >
-          <FontAwesomeIcon icon={faSlidersH} />
-        </button>
+      <div
+        className={`flex items-center ${
+          postsCount ? "justify-between" : "justify-end"
+        }  py-4`}
+      >
+        {postsCount && (
+          <p className="font-thin text-lg">
+            Posts (<span className="font-medium">{postsCount}</span>)
+          </p>
+        )}
+        <div>
+          {Object.keys(router.query).length > 0 && (
+            <button
+              onClick={clearFilter}
+              className="px-3 py-2 hover:bg-gray-200 bg-gray-100 rounded-md mr-2"
+            >
+              Clear Filer
+            </button>
+          )}
+          <button
+            onClick={() => setShow(true)}
+            className="px-3 py-2 hover:bg-gray-200 bg-gray-100 rounded-md "
+          >
+            <FontAwesomeIcon icon={faSlidersH} />
+          </button>
+        </div>
       </div>
       <div
         ref={ref}
@@ -94,6 +116,7 @@ const Filter = ({ postsCount }) => {
                 {categories &&
                   categories.map((cat) => (
                     <button
+                      key={cat._id}
                       onClick={() => setCategory(cat.name)}
                       className={` mr-4  cursor-pointer truncate py-3 px-4 rounded-full  font-medium uppercase tracking-wider border  ${
                         category === cat.name
@@ -123,6 +146,7 @@ const Filter = ({ postsCount }) => {
                   categories.map((cat) => {
                     return cat.subcategories.map((sub) => (
                       <button
+                        key={sub}
                         onClick={() => setSubCat(sub)}
                         className={` mr-4  cursor-pointer truncate py-3 px-4 rounded-full  font-medium uppercase tracking-wider border  ${
                           subCat === sub
