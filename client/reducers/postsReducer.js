@@ -5,6 +5,10 @@ import {
   POST_CREATE_ERROR,
   POST_CREATE_REQUEST,
   POST_CREATE_SUCCESS,
+  SEARCH_POSTS_ERROR,
+  SEARCH_POSTS_REQUEST,
+  SEARCH_POSTS_RESET,
+  SEARCH_POSTS_SUCCESS,
 } from "../actions/constants";
 const featuredPostsInitialState = {
   posts: [],
@@ -71,6 +75,48 @@ export const createPostReducer = (
         success: payload,
       };
 
+    default:
+      return state;
+  }
+};
+
+export const searchPostReducer = (
+  state = {
+    loading: false,
+    error: null,
+    posts: [],
+  },
+  { type, payload }
+) => {
+  switch (type) {
+    case SEARCH_POSTS_REQUEST:
+      return {
+        ...state,
+        loading: true,
+        error: null,
+        posts: null,
+      };
+    case SEARCH_POSTS_ERROR:
+      return {
+        ...state,
+        loading: false,
+        error: payload,
+      };
+    case SEARCH_POSTS_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        error: null,
+        posts: payload.data,
+        count: payload.count,
+      };
+    case SEARCH_POSTS_RESET:
+      return {
+        ...state,
+        loading: false,
+        error: null,
+        posts: [],
+      };
     default:
       return state;
   }

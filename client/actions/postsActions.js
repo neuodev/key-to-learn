@@ -5,6 +5,9 @@ import {
   POST_CREATE_REQUEST,
   POST_CREATE_SUCCESS,
   POST_CREATE_ERROR,
+  SEARCH_POSTS_REQUEST,
+  SEARCH_POSTS_SUCCESS,
+  SEARCH_POSTS_ERROR,
 } from "./constants";
 import axios from "axios";
 
@@ -57,6 +60,42 @@ export const createPost = (postData) => async (dispatch, state) => {
   } catch (error) {
     dispatch({
       type: POST_CREATE_ERROR,
+      payload:
+        error.response && error.response.data.message
+          ? error.response.data.message
+          : error.message,
+    });
+  }
+};
+
+export const searchPosts = (filter) => async (dispatch, state) => {
+  dispatch({
+    type: SEARCH_POSTS_REQUEST,
+  });
+  const user = state().user;
+
+  const config = {
+    headers: {
+      "content-type": "application/json",
+      Authorization: `Bearer ${user.userInfo.token}`,
+    },
+  };
+  try {
+    const { data } = await axios.get("/api/v1/posts", {
+      params: filter,
+      headers: {
+        "content-type": "application/json",
+        Authorization: `Bearer ${user.userInfo.token}`,
+      },
+    });
+    console.log(data);
+    dispatch({
+      type: SEARCH_POSTS_SUCCESS,
+      payload: data,
+    });
+  } catch (error) {
+    dispatch({
+      type: SEARCH_POSTS_ERROR,
       payload:
         error.response && error.response.data.message
           ? error.response.data.message

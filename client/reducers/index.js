@@ -1,5 +1,9 @@
 import { combineReducers } from "redux";
-import { createPostReducer, featuredPostsReducer } from "./postsReducer";
+import {
+  createPostReducer,
+  featuredPostsReducer,
+  searchPostReducer,
+} from "./postsReducer";
 import { layoutReducer } from "./layoutReducer";
 import { registerUserReducer, userReduser } from "./usersReducer";
 export default combineReducers({
@@ -8,4 +12,5 @@ export default combineReducers({
   join: registerUserReducer,
   user: userReduser,
   createPost: createPostReducer,
+  search: searchPostReducer,
 });
