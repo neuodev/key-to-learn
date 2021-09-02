@@ -30,7 +30,7 @@ const Search = () => {
         type: SEARCH_POSTS_RESET,
       });
     };
-  }, [searchText, router.query]);
+  }, [router.query]);
   return (
     <div className="mt-4 p-4">
       <Head>
@@ -38,7 +38,11 @@ const Search = () => {
         <meta name="viewport" content="initial-scale=1.0, width=device-width" />
         <meta name="description" content={"Search key to learn posts"} />
       </Head>
-      <SearchFrom searchText={searchText} updateSearchText={updateSearchText} />
+      <SearchFrom
+        postsCount={count}
+        searchText={searchText}
+        updateSearchText={updateSearchText}
+      />
       <div>
         {loading ? (
           <div className="w-full h-full mt-20">
@@ -59,12 +63,7 @@ const Search = () => {
             </button>
           </div>
         ) : (
-          <div className="grid gap-5 my-10 grid-cols-12">
-            <div className="col-span-12">
-              <p className="font-thin text-lg">
-                Posts (<span className="font-medium">{count}</span>)
-              </p>
-            </div>
+          <div className="grid gap-5 mb-10 mt-0 grid-cols-12">
             {posts.map((post) => (
               <div
                 className="col-span-12 sm:col-span-6 md:col-span-4 "

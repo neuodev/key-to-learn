@@ -2,6 +2,9 @@ import {
   FEATURED_POSTS_ERROR,
   FEATURED_POSTS_REQUEST,
   FEATURED_POSTS_SUCCESS,
+  GET_CATEGORIES_ERROR,
+  GET_CATEGORIES_REQUEST,
+  GET_CATEGORIES_SUCCESS,
   POST_CREATE_ERROR,
   POST_CREATE_REQUEST,
   POST_CREATE_SUCCESS,
@@ -117,6 +120,39 @@ export const searchPostReducer = (
         error: null,
         posts: [],
       };
+    default:
+      return state;
+  }
+};
+export const getCategories = (
+  state = {
+    loading: false,
+    error: null,
+    categories: null,
+  },
+  { type, payload }
+) => {
+  switch (type) {
+    case GET_CATEGORIES_REQUEST:
+      return {
+        ...state,
+        loading: true,
+      };
+    case GET_CATEGORIES_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        error: null,
+        categories: payload,
+      };
+    case GET_CATEGORIES_ERROR:
+      return {
+        ...state,
+        loading: false,
+        error: payload,
+        categories: null,
+      };
+
     default:
       return state;
   }

@@ -3,9 +3,11 @@ import {
   createPostReducer,
   featuredPostsReducer,
   searchPostReducer,
+  getCategories,
 } from "./postsReducer";
 import { layoutReducer } from "./layoutReducer";
 import { registerUserReducer, userReduser } from "./usersReducer";
+
 export default combineReducers({
   featuredPosts: featuredPostsReducer,
   layout: layoutReducer,
@@ -13,4 +15,5 @@ export default combineReducers({
   user: userReduser,
   createPost: createPostReducer,
   search: searchPostReducer,
+  categories: getCategories,
 });

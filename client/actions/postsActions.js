@@ -8,6 +8,9 @@ import {
   SEARCH_POSTS_REQUEST,
   SEARCH_POSTS_SUCCESS,
   SEARCH_POSTS_ERROR,
+  GET_CATEGORIES_REQUEST,
+  GET_CATEGORIES_SUCCESS,
+  GET_CATEGORIES_ERROR,
 } from "./constants";
 import axios from "axios";
 
@@ -88,7 +91,6 @@ export const searchPosts = (filter) => async (dispatch, state) => {
         Authorization: `Bearer ${user.userInfo.token}`,
       },
     });
-    console.log(data);
     dispatch({
       type: SEARCH_POSTS_SUCCESS,
       payload: data,
@@ -96,6 +98,29 @@ export const searchPosts = (filter) => async (dispatch, state) => {
   } catch (error) {
     dispatch({
       type: SEARCH_POSTS_ERROR,
+      payload:
+        error.response && error.response.data.message
+          ? error.response.data.message
+          : error.message,
+    });
+  }
+};
+
+export const getCategories = () => async (dispatch, state) => {
+  dispatch({
+    type: GET_CATEGORIES_REQUEST,
+  });
+  try {
+    const {
+      data: { categories },
+    } = await axios.get("/api/v1/categories");
+    dispatch({
+      type: GET_CATEGORIES_SUCCESS,
+      payload: categories,
+    });
+  } catch (error) {
+    dispatch({
+      type: GET_CATEGORIES_ERROR,
       payload:
         error.response && error.response.data.message
           ? error.response.data.message
