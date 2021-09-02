@@ -11,7 +11,6 @@ const FeaturedPosts = () => {
   useEffect(() => {
     dispatch(getFeaturedPosts());
   }, []);
-  console.log(posts);
   return (
     <div className="mt-4">
       {loading ? (
