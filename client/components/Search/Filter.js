@@ -73,7 +73,7 @@ const Filter = ({ postsCount }) => {
         ) : null}
         <div className="flex items-center justify-center">
           {Object.keys(router.query).map((field) => {
-            if (field) {
+            if (field != "search") {
               return (
                 <div className="px-3 py-2 uppercase tracking-wider hover:bg-gray-200 bg-gray-100 rounded-md mr-2">
                   {router.query[field]}

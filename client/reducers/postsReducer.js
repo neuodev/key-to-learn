@@ -2,6 +2,9 @@ import {
   FEATURED_POSTS_ERROR,
   FEATURED_POSTS_REQUEST,
   FEATURED_POSTS_SUCCESS,
+  GET_ALL_POSTS_ERROR,
+  GET_ALL_POSTS_REQUEST,
+  GET_ALL_POSTS_SUCCESS,
   GET_CATEGORIES_ERROR,
   GET_CATEGORIES_REQUEST,
   GET_CATEGORIES_SUCCESS,
@@ -128,7 +131,42 @@ export const getCategories = (
   state = {
     loading: false,
     error: null,
-    categories: null,
+    posts: [],
+  },
+  { type, payload }
+) => {
+  switch (type) {
+    case GET_ALL_POSTS_REQUEST:
+      return {
+        ...state,
+        loading: true,
+      };
+    case GET_ALL_POSTS_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        error: null,
+        posts: payload.data,
+        count: payload.count,
+      };
+    case GET_ALL_POSTS_ERROR:
+      return {
+        ...state,
+        loading: false,
+        error: payload,
+        posts: [],
+      };
+
+    default:
+      return state;
+  }
+};
+
+export const getAllPosts = (
+  state = {
+    loading: false,
+    error: null,
+    posts: null,
   },
   { type, payload }
 ) => {
@@ -143,14 +181,14 @@ export const getCategories = (
         ...state,
         loading: false,
         error: null,
-        categories: payload,
+        posts: payload,
       };
     case GET_CATEGORIES_ERROR:
       return {
         ...state,
         loading: false,
         error: payload,
-        categories: null,
+        posts: null,
       };
 
     default:

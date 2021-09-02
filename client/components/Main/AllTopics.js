@@ -25,7 +25,7 @@ const AllTopics = () => {
             return cat.subcategories.map((sub) => (
               <button
                 key={sub}
-                className={` mr-4  mb-4 cursor-pointer truncate py-3 px-4 rounded-md  font-medium uppercase tracking-wider border  ${"hover:bg-gray-50 bg-gray-100 text-gray-800 "}`}
+                className={`mr-4 mb-4 cursor-pointer truncate py-3 px-4 rounded-md  font-medium uppercase tracking-wider border  ${"hover:bg-gray-50 bg-gray-100 text-gray-800 "}`}
               >
                 {sub}
               </button>

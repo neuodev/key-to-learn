@@ -11,6 +11,9 @@ import {
   GET_CATEGORIES_REQUEST,
   GET_CATEGORIES_SUCCESS,
   GET_CATEGORIES_ERROR,
+  GET_ALL_POSTS_REQUEST,
+  GET_ALL_POSTS_SUCCESS,
+  GET_ALL_POSTS_ERROR,
 } from "./constants";
 import axios from "axios";
 
@@ -128,3 +131,34 @@ export const getCategories = () => async (dispatch, state) => {
     });
   }
 };
+
+export const getAllPosts =
+  ({ limit, page }) =>
+  async (dispatch) => {
+    dispatch({
+      type: GET_ALL_POSTS_REQUEST,
+    });
+
+    try {
+      const { data } = await axios.get("/api/v1/posts", {
+        params: {
+          select: "createdAt,thumbnail,domain,header,slug",
+          sort: "-createdAt",
+          limit,
+          page,
+        },
+      });
+      dispatch({
+        type: GET_ALL_POSTS_SUCCESS,
+        payload: data,
+      });
+    } catch (error) {
+      dispatch({
+        type: GET_ALL_POSTS_ERROR,
+        payload:
+          error.response && error.response.data.error
+            ? error.response.data.error
+            : error.message,
+      });
+    }
+  };
