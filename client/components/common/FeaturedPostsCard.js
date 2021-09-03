@@ -8,16 +8,9 @@ const FeaturedPostsCard = ({ post, idx }) => {
 
   return (
     <div
-      className={`${
-        idx === 0
-          ? "col-span-12 lg:col-span-8 lg:row-span-full "
-          : "col-span-12 md:col-span-6 lg:col-span-4 lg:row-span-3 "
-      }`}
+      className={`${"col-span-12 sm:col-span-6 lg:col-span-4 lg:row-span-3 "} max-w-sm mx-auto`}
     >
       <div className="w-full">
-        {idx === 0 && (
-          <h1 className="text-6xl mb-9 hidden lg:block">Key To Learn</h1>
-        )}
         <Link href={`/post/${post.slug}`}>
           <div className="mb-4 cursor-pointer h-full w-full">
             <img
@@ -28,7 +21,7 @@ const FeaturedPostsCard = ({ post, idx }) => {
           </div>
         </Link>
         <Link href={`/post/${post.slug}`}>
-          <h1 className=" text-3xl mb-2 inline-block cursor-pointer hover:underline hover:text-blue-400">
+          <h1 className=" sm:text-lg sm:font-medium turncate text-3xl  mb-2 inline-block cursor-pointer hover:underline hover:text-blue-400">
             {post.header}
           </h1>
         </Link>

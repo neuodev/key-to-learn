@@ -13,6 +13,11 @@ const FeaturedPosts = () => {
   }, []);
   return (
     <div className="mt-4">
+      <div>
+        <h1 className="p-4 text-3xl font-semibold tracking-wider">
+          Key To Learn Tutorials
+        </h1>
+      </div>
       {loading ? (
         <FeaturedPostsSkeleton />
       ) : error ? (

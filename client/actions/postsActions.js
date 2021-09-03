@@ -26,7 +26,7 @@ export const getFeaturedPosts = () => async (dispatch) => {
     const { data } = await axios.get("/api/v1/posts", {
       params: {
         select: "createdAt,thumbnail,domain,header,slug",
-        limit: 3,
+        limit: 4,
         sort: "-createdAt",
       },
     });
