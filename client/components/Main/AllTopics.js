@@ -1,7 +1,15 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
+import { getCategories } from "../../actions/postsActions";
 const AllTopics = () => {
   const { categories, loading } = useSelector((state) => state.categories);
+  const dispatch = useDispatch();
+  useEffect(() => {
+    if (!categories) {
+      dispatch(getCategories());
+    }
+  }, []);
+
   return (
     <div className="p-4 ">
       <div className="mb-3 flex flex-wrap items-center justify-start">

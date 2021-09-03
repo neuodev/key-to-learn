@@ -4,6 +4,7 @@ import {
   featuredPostsReducer,
   searchPostReducer,
   getCategories,
+  getAllPosts,
 } from "./postsReducer";
 import { layoutReducer } from "./layoutReducer";
 import { registerUserReducer, userReduser } from "./usersReducer";
@@ -16,4 +17,5 @@ export default combineReducers({
   createPost: createPostReducer,
   search: searchPostReducer,
   categories: getCategories,
+  allPosts: getAllPosts,
 });

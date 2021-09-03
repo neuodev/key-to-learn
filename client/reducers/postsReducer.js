@@ -131,42 +131,7 @@ export const getCategories = (
   state = {
     loading: false,
     error: null,
-    posts: [],
-  },
-  { type, payload }
-) => {
-  switch (type) {
-    case GET_ALL_POSTS_REQUEST:
-      return {
-        ...state,
-        loading: true,
-      };
-    case GET_ALL_POSTS_SUCCESS:
-      return {
-        ...state,
-        loading: false,
-        error: null,
-        posts: payload.data,
-        count: payload.count,
-      };
-    case GET_ALL_POSTS_ERROR:
-      return {
-        ...state,
-        loading: false,
-        error: payload,
-        posts: [],
-      };
-
-    default:
-      return state;
-  }
-};
-
-export const getAllPosts = (
-  state = {
-    loading: false,
-    error: null,
-    posts: null,
+    categories: null,
   },
   { type, payload }
 ) => {
@@ -181,14 +146,51 @@ export const getAllPosts = (
         ...state,
         loading: false,
         error: null,
-        posts: payload,
+        categories: payload,
       };
     case GET_CATEGORIES_ERROR:
       return {
         ...state,
         loading: false,
         error: payload,
-        posts: null,
+        categories: null,
+      };
+
+    default:
+      return state;
+  }
+};
+
+export const getAllPosts = (
+  state = {
+    loading: false,
+    error: null,
+    posts: [],
+    count: 0,
+  },
+  { type, payload }
+) => {
+  switch (type) {
+    case GET_ALL_POSTS_REQUEST:
+      return {
+        ...state,
+        loading: true,
+      };
+    case GET_ALL_POSTS_SUCCESS:
+      console.log([state.posts, ...payload.data]);
+      return {
+        ...state,
+        loading: false,
+        error: null,
+        posts: [...state.posts, ...payload.data],
+        count: payload.count,
+      };
+    case GET_ALL_POSTS_ERROR:
+      return {
+        ...state,
+        loading: false,
+        error: payload,
+        posts: [],
       };
 
     default:
