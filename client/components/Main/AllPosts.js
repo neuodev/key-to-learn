@@ -14,20 +14,19 @@ const AllPosts = () => {
 
   const [page, setPage] = useState(1);
   useEffect(() => {
-    if (Math.ceil(count / 1) <= page) dispatch(getAllPosts(1, page));
+    if (page <= Math.ceil(count / 1) || count === 0)
+      dispatch(getAllPosts(1, page));
   }, [page]);
 
-  const handleObserver = useCallback((entries) => {
-    const target = entries[0];
-    console.log({
-      target,
-      entries,
-      page: Math.ceil(count / 1),
-    });
-    if (target.isIntersecting && Math.ceil(count / 1) >= page) {
-      setPage((prev) => prev + 1);
-    }
-  }, []);
+  const handleObserver = useCallback(
+    (entries) => {
+      const target = entries[0];
+      if (target.isIntersecting && page <= Math.ceil(count / 1)) {
+        setPage((prev) => prev + 1);
+      }
+    },
+    [count]
+  );
   useEffect(() => {
     const option = {
       root: null,
