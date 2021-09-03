@@ -9,7 +9,8 @@
     "import": "node seeder.js",
     "distroy": "node seeder.js -d",
     "start:client": "npm run dev --prefix client",
-    "start:admin": "npm run dev:server --prefix admin"
+    "start:admin": "npm run dev:server --prefix admin",
+    "start:dev:all": " concurrently --names server,admin,client \" npm run dev \" \" npm run start:admin \" \" npm run start:client \" "
   },
   "author": "Ahmed Ibrahim",
   "license": "MIT",
@@ -19,6 +20,7 @@
   "dependencies": {
     "bcryptjs": "^2.4.3",
     "colors": "^1.4.0",
+    "concurrently": "^6.2.1",
     "dotenv": "^10.0.0",
     "express": "^4.17.1",
     "express-async-handler": "^1.1.4",
