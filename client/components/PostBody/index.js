@@ -1,7 +1,9 @@
 import React from "react";
+import CheckList from "./CheckList";
 import Code from "./Code/Code";
 import Header from "./Header";
 import List from "./List";
+import Quote from "./Quote";
 import Table from "./Table";
 import Text from "./Text";
 
@@ -24,6 +26,12 @@ const PostBody = ({ body }) => {
         }
         if (block.type === "table") {
           return <Table data={data} />;
+        }
+        if (block.type === "quote") {
+          return <Quote data={data} />;
+        }
+        if (block.type === "checklist") {
+          return <CheckList data={data} />;
         }
       })}
       <pre>{JSON.stringify(body, null, 2)}</pre>
