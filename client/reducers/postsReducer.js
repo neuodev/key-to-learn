@@ -177,11 +177,24 @@ export const getAllPosts = (
         loading: true,
       };
     case GET_ALL_POSTS_SUCCESS:
+      const filteredPosts = [];
+      const allIds = new Set();
+      const allPosts = [...state.posts, ...payload.data];
+
+      for (const post of allPosts) {
+        if (!allIds.has(post._id)) {
+          filteredPosts.push(post);
+          allIds.add(post._id);
+        }
+      }
+
+      console.log(allIds);
+
       return {
         ...state,
         loading: false,
         error: null,
-        posts: [...state.posts, ...payload.data],
+        posts: filteredPosts,
         count: payload.count,
       };
     case GET_ALL_POSTS_ERROR:
