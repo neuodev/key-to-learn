@@ -177,7 +177,6 @@ export const getAllPosts = (
         loading: true,
       };
     case GET_ALL_POSTS_SUCCESS:
-      console.log([state.posts, ...payload.data]);
       return {
         ...state,
         loading: false,

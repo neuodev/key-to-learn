@@ -32,7 +32,7 @@ const Search = () => {
     };
   }, [router.query]);
   return (
-    <div className="mt-4 p-4">
+    <div className="mt-4 p-4 min-h-screen">
       <Head>
         <title>Search {searchText && `| ` + searchText}</title>
         <meta name="viewport" content="initial-scale=1.0, width=device-width" />

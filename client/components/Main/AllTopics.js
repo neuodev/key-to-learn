@@ -1,6 +1,8 @@
 import React, { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { getCategories } from "../../actions/postsActions";
+import Link from "next/link";
+
 const AllTopics = () => {
   const { categories, loading } = useSelector((state) => state.categories);
   const dispatch = useDispatch();
@@ -18,12 +20,13 @@ const AllTopics = () => {
       <div className="flex flex-wrap ">
         {categories &&
           categories.map((cat) => (
-            <button
-              key={cat._id}
-              className={` mr-4 mb-4 cursor-pointer truncate py-3 px-4 rounded-md  font-medium uppercase tracking-wider border  ${"hover:bg-gray-50 bg-gray-100 text-gray-800 "}`}
-            >
-              {cat.name}
-            </button>
+            <Link href={`/search?domain.categories=${cat.name}`} key={cat._id}>
+              <p
+                className={` mr-4 mb-4 cursor-pointer truncate py-3 px-4 rounded-md  font-medium uppercase tracking-wider border  ${"hover:bg-gray-50 bg-gray-100 text-gray-800 "}`}
+              >
+                {cat.name}
+              </p>
+            </Link>
           ))}
       </div>
 
@@ -31,12 +34,14 @@ const AllTopics = () => {
         {categories &&
           categories.map((cat) => {
             return cat.subcategories.map((sub) => (
-              <button
-                key={sub}
-                className={`mr-4 mb-4 cursor-pointer truncate py-3 px-4 rounded-md  font-medium uppercase tracking-wider border  ${"hover:bg-gray-50 bg-gray-100 text-gray-800 "}`}
-              >
-                {sub}
-              </button>
+              <Link href={`/search?domain.subcategory=${sub}`} key={sub}>
+                <p
+                  className={`mr-4 mb-4 cursor-pointer truncate py-3 px-4 rounded-md  font-medium uppercase tracking-wider border  ${"hover:bg-gray-50 bg-gray-100 text-gray-800 "}`}
+                >
+                  {" "}
+                  {sub}
+                </p>
+              </Link>
             ));
           })}
       </div>

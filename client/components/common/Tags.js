@@ -27,12 +27,16 @@ const Tags = ({ tags }) => {
       )}
       {tags.categories.length > 0 && (
         <Link href={`/search?domain.categories=${tags.categories[0]}`}>
-          <div className={className}>{tags.categories[0]}</div>
+          <div className={className + "flex items-center justify-center"}>
+            <p className="truncate">{tags.categories[0]}</p>
+          </div>
         </Link>
       )}
       {tags.subcategory.length > 0 && (
         <Link href={`/search?domain.subcategory=${tags.subcategory}`}>
-          <div className={className}>{tags.subcategory[0]}</div>
+          <div className={className + "flex items-center justify-center"}>
+            <p className="truncate md:text-xs">{tags.subcategory[0]}</p>
+          </div>
         </Link>
       )}
     </div>
