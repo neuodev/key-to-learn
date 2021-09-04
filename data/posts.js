@@ -147,4 +147,139 @@ module.exports = [
       "https://robocrop.realpython.net/?url=https%3A//files.realpython.com/media/Monthly-Python-News_Blue_Watermarked.7af21e149ead.jpg&w=960&sig=d98fb9f773a91b2971cc72a3ffaed061a85bd5a0",
     header: "Transform data",
   },
+  {
+    domain: {
+      category: ["ML"],
+      subcategory: ["Transform data"],
+      tags: [],
+      level: "BASICS",
+    },
+    body: {
+      time: 1630081616906,
+      blocks: [
+        {
+          id: "4VxxzZc3KG",
+          type: "header",
+          data: { text: "Docker", level: 2 },
+        },
+        {
+          id: "fOfio8PDNX",
+          type: "paragraph",
+          data: {
+            text: "Learning Docker one of the most in demand skill you can have on you Resume&nbsp;",
+          },
+        },
+        {
+          id: "kfcwtV_1d7",
+          type: "list",
+          data: { style: "ordered", items: ["Docker"] },
+        },
+      ],
+      version: "2.22.2",
+    },
+    likes: [],
+    published: true,
+    thumbnail:
+      "https://robocrop.realpython.net/?url=https%3A//files.realpython.com/media/Reading-and-Writing-Data-With-Pandas_Watermarked.435ef1c38466.jpg&w=480&sig=d20a2aeb6c0d2a0fb6790d5ddfe714a42fb86478",
+    header: "Learn HTML CSS Now With Your Hardwork",
+  },
+  {
+    domain: {
+      category: ["ML"],
+      subcategory: ["Low effort"],
+      tags: ["lol", "learn", "less", "before"],
+      level: "ADVANCED",
+    },
+    body: {
+      time: 1587670998983,
+      blocks: [
+        {
+          id: "1",
+          type: "header",
+          data: {
+            text: "A heading",
+            level: 2,
+          },
+        },
+        {
+          id: "2",
+          type: "paragraph",
+          data: {
+            text: 'Paragraph with some <b>bold</b>&nbsp;text. And <a href="https://google.com">some</a> <i>italic</i>&nbsp;text.',
+          },
+        },
+        {
+          id: "3",
+          type: "paragraph",
+          data: {
+            text: "A lovely editor I must say.",
+          },
+        },
+        {
+          id: "4",
+          type: "paragraph",
+          data: {
+            text: "Save new data.",
+          },
+        },
+        {
+          id: "5",
+          type: "table",
+          data: {
+            content: [
+              ["Col 1", "Col 2"],
+              ["Cell 1", "Cell 2"],
+              ["Cell 3", "Cell 4"],
+            ],
+          },
+        },
+        {
+          id: "6",
+          type: "quote",
+          data: {
+            text: "A quote",
+            caption: "With a caption",
+            alignment: "left",
+          },
+        },
+        {
+          id: "7",
+          type: "checklist",
+          data: {
+            items: [
+              {
+                text: "Check 1",
+                checked: false,
+              },
+              {
+                text: "Check 2",
+                checked: true,
+              },
+              {
+                text: "Check 3",
+                checked: false,
+              },
+            ],
+          },
+        },
+        {
+          id: "8",
+          type: "simpleImage",
+          data: {
+            url: "https://thedriven.io/wp-content/uploads/2020/01/Model-Y-Side-Blue.jpg",
+            caption: "Paste image URL",
+            withBorder: false,
+            withBackground: false,
+            stretched: true,
+          },
+        },
+      ],
+      version: "2.17.0",
+    },
+    likes: [],
+    published: true,
+    thumbnail:
+      "https://robocrop.realpython.net/?url=https%3A//files.realpython.com/media/Monthly-Python-News_Blue_Watermarked.7af21e149ead.jpg&w=960&sig=d98fb9f773a91b2971cc72a3ffaed061a85bd5a0",
+    header: "Learn How To Learn",
+  },
 ];

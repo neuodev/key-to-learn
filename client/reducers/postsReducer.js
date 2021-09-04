@@ -188,8 +188,6 @@ export const getAllPosts = (
         }
       }
 
-      console.log(allIds);
-
       return {
         ...state,
         loading: false,
