@@ -4,6 +4,7 @@ import Code from "./Code/Code";
 import Header from "./Header";
 import List from "./List";
 import Quote from "./Quote";
+import SimpleImage from "./SimpleImage";
 import Table from "./Table";
 import Text from "./Text";
 
@@ -33,8 +34,10 @@ const PostBody = ({ body }) => {
         if (block.type === "checklist") {
           return <CheckList data={data} />;
         }
+        if (block.type === "simpleImage") {
+          return <SimpleImage data={data} />;
+        }
       })}
-      <pre>{JSON.stringify(body, null, 2)}</pre>
     </div>
   );
 };
