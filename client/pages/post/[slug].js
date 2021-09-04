@@ -16,7 +16,7 @@ const Post = ({ post }) => {
         <meta name="viewport" content="initial-scale=1.0, width=device-width" />
         <meta name="description" content={post.domain.tags.toString()} />
       </Head>
-      <div className="h-100">
+      <div className="">
         <img
           className="w-full h-full object-cover "
           src={post.thumbnail}
